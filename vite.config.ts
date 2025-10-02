@@ -19,6 +19,7 @@ export default defineConfig({
       "@shared": resolve(__dirname, "src/shared"),
       "@store": resolve(__dirname, "src/store"),
       "@assets": resolve(__dirname, "src/assets"),
+      "@styles": resolve(__dirname, "src/styles"),
     },
   },
 });
