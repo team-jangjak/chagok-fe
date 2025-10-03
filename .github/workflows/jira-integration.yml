@@ -14,8 +14,14 @@ jobs:
       - name: PR 제목에서 이슈 키 추출
         id: extract
         run: |
-          ISSUE=$(echo "${{ github.event.pull_request.title }}" | grep -oE 'CHA-[0-9]+' || true)
+          RAW=$(echo "${{ github.event.pull_request.title }}" | grep -ioE 'CHA-[0-9]+' | head -n1 || true)
+          if [ -z "$RAW" ]; then
+            echo "PR 제목에서 JIRA 이슈 키를 찾을 수 없습니다."
+            exit 0  # 키가 없으면 이후 단계는 실행 안 함
+          fi
+          ISSUE=${RAW^^}  # 항상 대문자로 변환
           echo "issue=$ISSUE" >> $GITHUB_OUTPUT
+          echo "PR 제목: ${{ github.event.pull_request.title }}"
           echo "추출된 이슈: $ISSUE"
 
       - name: Jira 이슈 상태 확인
@@ -27,7 +33,7 @@ jobs:
             -H "Content-Type: application/json" \
             "${{ secrets.JIRA_BASE_URL }}/rest/api/3/issue/${{ steps.extract.outputs.issue }}?fields=status")
 
-          STATUS=$(echo $RESPONSE | jq -r '.fields.status.name')
+          STATUS=$(echo "$RESPONSE" | jq -r '.fields.status.name')
           echo "현재 상태: $STATUS"
           echo "status=$STATUS" >> $GITHUB_OUTPUT
 
@@ -41,8 +47,13 @@ jobs:
 
           echo "전체 응답: $RESPONSE"
 
-          # '완료' 또는 'Done' 이라는 이름 가진 transition의 ID 추출
-          ID=$(echo $RESPONSE | jq -r '.transitions[] | select(.name=="완료" or .name=="Done") | .id')
+          # '완료' 또는 'Done' transition ID 추출
+          ID=$(echo "$RESPONSE" | jq -r '.transitions[] | select(.name=="완료" or .name=="Done") | .id')
+
+          if [ -z "$ID" ] || [ "$ID" == "null" ]; then
+            echo "완료 전환 ID를 찾을 수 없습니다."
+            exit 0
+          fi
 
           echo "done_id=$ID" >> $GITHUB_OUTPUT
           echo "추출된 완료 전환 ID: $ID"
