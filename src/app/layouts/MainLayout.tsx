@@ -1,6 +1,6 @@
 // MainLayout 컴포넌트 (-> BottomNavigation을 통해 왔다갔다 하는 메인 페이지 레이아웃)
-import BottomNavigation from "@shared/ui/BottomNaviagtion";
-import { Outlet } from "react-router";
+import BottomNavigation from '@shared/ui/BottomNaviagtion';
+import { Outlet } from 'react-router';
 
 function MainLayout() {
   return (

@@ -1,7 +1,7 @@
-import { createBrowserRouter, RouterProvider } from "react-router";
-import { AuthRoutes } from "@app/router/AuthRoutes";
-import { MainRoutes } from "@app/router/MainRoutes";
-import LandingPage from "@pages/Landing";
+import { createBrowserRouter, RouterProvider } from 'react-router';
+import { AuthRoutes } from '@app/router/AuthRoutes';
+import { MainRoutes } from '@app/router/MainRoutes';
+import LandingPage from '@pages/Landing';
 
 /*
 	createBrowserRouter를 사용하여 라우터를 생성.
@@ -12,7 +12,7 @@ import LandingPage from "@pages/Landing";
 */
 
 const router = createBrowserRouter([
-  { path: "/", element: <LandingPage /> },
+  { path: '/', element: <LandingPage /> },
   ...AuthRoutes,
   ...MainRoutes,
 ]);

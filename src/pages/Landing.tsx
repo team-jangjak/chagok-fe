@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link } from 'react-router';
 
 // 랜딩 페이지 (비회원도 접근 가능)
 function LandingPage() {

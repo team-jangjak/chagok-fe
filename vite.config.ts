@@ -1,8 +1,8 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react"; // React 플러그인 추가
-import { fileURLToPath } from "node:url";
-import { dirname, resolve } from "node:path";
-import tailwind from "@tailwindcss/vite";
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react'; // React 플러그인 추가
+import { fileURLToPath } from 'node:url';
+import { dirname, resolve } from 'node:path';
+import tailwind from '@tailwindcss/vite';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -12,14 +12,14 @@ export default defineConfig({
   plugins: [react(), tailwind()],
   resolve: {
     alias: {
-      "@": resolve(__dirname, "src"),
-      "@app": resolve(__dirname, "src/app"),
-      "@pages": resolve(__dirname, "src/pages"),
-      "@features": resolve(__dirname, "src/features"),
-      "@shared": resolve(__dirname, "src/shared"),
-      "@store": resolve(__dirname, "src/store"),
-      "@assets": resolve(__dirname, "src/assets"),
-      "@styles": resolve(__dirname, "src/styles"),
+      '@': resolve(__dirname, 'src'),
+      '@app': resolve(__dirname, 'src/app'),
+      '@pages': resolve(__dirname, 'src/pages'),
+      '@features': resolve(__dirname, 'src/features'),
+      '@shared': resolve(__dirname, 'src/shared'),
+      '@store': resolve(__dirname, 'src/store'),
+      '@assets': resolve(__dirname, 'src/assets'),
+      '@styles': resolve(__dirname, 'src/styles'),
     },
   },
 });
