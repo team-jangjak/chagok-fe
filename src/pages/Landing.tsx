@@ -6,7 +6,7 @@ function LandingPage() {
     <div>
       <h1>차곡차곡 쌓아보자 얘들아!!</h1>
       <h2>갓생 살아보자~</h2>
-      <Link to="/login">로그인</Link>
+      <Link to="/auth/login">로그인</Link>
     </div>
   );
 }
