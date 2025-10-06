@@ -1,5 +1,5 @@
 // 보통 인증이 필요한 API 호출할 때, 토큰을 헤더에 추가해야 한다.
-// 이런 일들을 자동으로 해주는 ky 인스턴스를 사용한다.
+// 이런 일들을 자동으로 해주는 ky 인스턴스를 사용한다. (-> axios와 유사)
 import ky from 'ky';
 
 const kyInstance = ky.create({

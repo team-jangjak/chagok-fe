@@ -13,11 +13,13 @@ function LoginPage() {
     <div className="flex flex-col items-center justify-center h-screen px-20">
       <span className="text-4xl font-bold text-gray-900">Login</span>
 
-      <div className="w-full h-auto mt-8 mb-4">
+      {/* 로그인 애니메이션 */}
+      <div className="w-[200px] h-[200px] mt-8 mb-4">
         <DotLottieReact
           src="https://lottie.host/d20599f6-9590-47f2-af0c-c1f0d2e1c59c/giTwOCGajP.lottie"
           loop
           autoplay
+          layout={{ fit: 'contain' }}
         />
       </div>
 

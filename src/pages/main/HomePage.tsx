@@ -6,22 +6,9 @@
 
 function HomePage() {
   return (
-    <div>
-      <h1>HomePage</h1>
-      <h1>HomePage</h1>
-      <h1>HomePage</h1>
-      <h1>HomePage</h1>
-      <h1>HomePage</h1>
-      <h1>HomePage</h1>
-      <h1>HomePage</h1>
-      <h1>HomePage</h1>
-      <h1>HomePage</h1>
-      <h1>HomePage</h1>
-      <h1>HomePage</h1>
-      <h1>HomePage</h1>
-      <h1>HomePage</h1>
-      <h1>HomePage</h1>
-      <button>test</button>
+    <div className="flex flex-col items-center justify-center h-screen px-20">
+      <span className="text-4xl font-bold text-gray-900">HomePage</span>
+      <span className="text-2xl font-semilight text-gray-600">기처리는 집에 가고 싶어요</span>
     </div>
   );
 }
