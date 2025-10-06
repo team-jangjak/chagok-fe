@@ -7,7 +7,6 @@
   "useTabs": false,
   "printWidth": 100,
   "bracketSpacing": true,
-  "jsxBracketSameLine": false,
   "arrowParens": "always",
   "endOfLine": "lf",
   "htmlWhitespaceSensitivity": "css",
