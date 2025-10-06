@@ -13,15 +13,15 @@ export const MainRoutes: RouteObject[] = [
     element: <MainLayout />, // MainLayout 컴포넌트를 띄운다
     children: [
       {
-        index: true, // main 접속 시, 기본 페이지로 HomePage를 띄운다
+        path: 'home', // 초기 화면
         element: <HomePage />,
       },
       {
-        path: 'history',
+        path: 'history', // 기록 페이지
         element: <HistoryPage />,
       },
       {
-        path: 'my',
+        path: 'my', // 마이 페이지
         element: <MyPage />,
       },
     ],
