@@ -1,9 +1,10 @@
 // 로그인 페이지 (비회원도 접근 가능)
 import { useNavigate } from 'react-router';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react'; // lottie 애니메이션 사용을 위한 라이브러리
 
 function LoginPage() {
   const navigate = useNavigate();
-  // 로그인 핸들러
+
   function handleLogin() {
     navigate('/main/home');
   }
@@ -11,6 +12,15 @@ function LoginPage() {
   return (
     <div className="flex flex-col items-center justify-center h-screen px-20">
       <span className="text-4xl font-bold text-gray-900">Login</span>
+
+      <div className="w-full h-auto mt-8 mb-4">
+        <DotLottieReact
+          src="https://lottie.host/d20599f6-9590-47f2-af0c-c1f0d2e1c59c/giTwOCGajP.lottie"
+          loop
+          autoplay
+        />
+      </div>
+
       <input
         id="id"
         type="text"
