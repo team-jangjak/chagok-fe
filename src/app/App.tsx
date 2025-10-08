@@ -1,13 +1,12 @@
-import "@styles/index.css";
-import { BrowserRouter } from "react-router"; // react-router 사용
-import AppRoutes from "@app/router";
+import '@styles/index.css';
+import { AppRouter } from '@app/router/AppRouter';
 
 // 모든 컴포넌트를 포함하는 최상단 컴포넌트
 function App() {
   return (
-    <BrowserRouter>
-      <AppRoutes />
-    </BrowserRouter>
+    <div className="mx-auto w-full max-w-md min-h-screen flex flex-col bg-gray-100 border-l-2 border-r-2 border-gray-100">
+      <AppRouter />
+    </div>
   );
 }
 
