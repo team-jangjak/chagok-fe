@@ -1,6 +1,8 @@
 // 로그인 페이지 (비회원도 접근 가능)
 import { useNavigate } from 'react-router';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react'; // lottie 애니메이션 사용을 위한 라이브러리
+import kakaoLoginButton from '../assets/kakao-login-button.svg';
+import googleLoginButton from '../assets/google-login-button.svg';
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -11,7 +13,11 @@ function LoginPage() {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen px-20">
-      <span className="text-4xl font-bold text-gray-900">Login</span>
+      <span className="text-4xl font-extrabold text-gray-900">차곡차곡</span>
+      <div className="mt-5">
+        <p className="text-black font-bold">갓생을 살고 싶은 여러분들을</p>
+        <p className="text-black font-bold">위해 준비했습니다.</p>
+      </div>
 
       {/* 로그인 애니메이션 */}
       <div className="w-[200px] h-[200px] mt-8 mb-4">
@@ -23,18 +29,10 @@ function LoginPage() {
         />
       </div>
 
-      <input
-        id="id"
-        type="text"
-        placeholder="아이디를 입력해 주세요"
-        className="w-full p-2 border border-gray-300 bg-white text-gray-900 rounded-md mt-8 mb-4"
-      />
-      <input
-        id="password"
-        type="password"
-        placeholder="비밀번호를 입력해 주세요"
-        className="w-full p-2 border border-gray-300 bg-white text-gray-900 rounded-md mb-4"
-      />
+      <div className="flex flex-col gap-3">
+        <img src={kakaoLoginButton} />
+        <img src={googleLoginButton} className="border border-black rounded-lg" />
+      </div>
       <button className="mt-4" onClick={handleLogin}>
         Login
       </button>
