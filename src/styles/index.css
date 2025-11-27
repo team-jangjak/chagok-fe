@@ -6,6 +6,8 @@
   --color-secondary: #fc9e4f; /* 보조 컬러 */
   --color-text: #020122; /* 텍스트 컬러 */
   --color-background: #ffffff; /* 배경 컬러 */
+  --color-lightgray: #c2c2c2; /* 연한 회색 */
+  --color-darkgray: #e2e2e2; /* 진한 회색 */
 }
 
 /* Wanted Sans 폰트 추가 (기본적인 3가지만 우선 설정) */
@@ -34,6 +36,7 @@ body,
 body {
   font-family: 'Wanted Sans', system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-weight: 400;
+  color: var(--color-text); /* 시스템의 텍스트 기본 컬러 */
 }
 
 a {

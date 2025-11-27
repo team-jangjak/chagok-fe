@@ -8,3 +8,9 @@ export interface FormState {
   day: string;
   email: string;
 }
+
+// 온보딩 페이지에서 화면 이동 단계 정보 타입 정의
+export interface StepInfo {
+  step: number; // 화면 이동 단계
+  buttonTitle: string; // 다음 버튼 타이틀
+}

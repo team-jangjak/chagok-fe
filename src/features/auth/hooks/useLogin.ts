@@ -7,13 +7,13 @@ function useLogin() {
   function handleKakaoLogin() {
     // "카카오 로그인" 관련 핸들러 함수
     console.log('Kakao Login');
-    navigate('/auth/onboarding');
+    navigate('/onboarding/tutorial-intro');
   }
 
   function handleGoogleLogin() {
     // "구글 로그인" 관련 핸들러 함수
     console.log('Google Login');
-    navigate('/auth/onboarding');
+    navigate('/onboarding/tutorial-intro');
   }
 
   return {
