@@ -1,8 +1,8 @@
 // 인증 관련 라우트 설정
 // 로그인, 회원가입 페이지를 하위 라우트로 관리
 import type { RouteObject } from 'react-router';
-import LoginPage from '@/pages/LoginPage';
-import SignupPage from '@/pages/SignupPage';
+import LoginPage from '@pages/LoginPage';
+import OnboardingPage from '@pages/OnboardingPage';
 
 export const AuthRoutes: RouteObject[] = [
   {
@@ -13,8 +13,8 @@ export const AuthRoutes: RouteObject[] = [
         element: <LoginPage />,
       },
       {
-        path: 'signup',
-        element: <SignupPage />,
+        path: 'onboarding',
+        element: <OnboardingPage />,
       },
     ],
   },
