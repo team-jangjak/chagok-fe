@@ -20,6 +20,7 @@ export default defineConfig({
       '@store': resolve(__dirname, 'src/store'),
       '@assets': resolve(__dirname, 'src/assets'),
       '@styles': resolve(__dirname, 'src/styles'),
+      '@components': resolve(__dirname, 'src/components'),
     },
   },
 });

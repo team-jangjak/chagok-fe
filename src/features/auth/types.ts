@@ -1,16 +1,22 @@
-// "인증" 도메인 관련한 타입들 정의
-export interface FormState {
-  // 추가 데이터 입력 폼 데이터 타입 정의
-  profileImage: string | null; // --> 프로필 이미지는.. s3에 올리고, 그 url을 저장하는 것이 나을 듯
-  gender: 'male' | 'female' | null;
-  year: string; // --> 생년월일은.. yyyy-MM-dd 형식으로 저장하는 것이 나을 듯 (-> 나중에 조합해서 사용)
-  month: string;
-  day: string;
-  email: string;
+// "인증(소셜 로그인+추가정보 입력을 통한 '회원가입' 전체 과정)" 도메인 관련한 타입들 정의
+export interface SignUpData {
+  oauthId: number; // OAuth 계정 고유 ID
+  name: string; // 사용자 이름
+  email: string; // 사용자 이메일
+  birthDate: string; // 사용자 생년월일 (yyyy-MM-dd 형식)
+  profileImage: string; // 사용자 프로필 이미지 (S3에서 업로드 해서 받은 이미지 url)
+  tendency: number; // 사용자 성향 점수 (0~100점)
 }
 
-// 온보딩 페이지에서 화면 이동 단계 정보 타입 정의
-export interface StepInfo {
-  step: number; // 화면 이동 단계
-  buttonTitle: string; // 다음 버튼 타이틀
-}
+// OnboardingContext에서의 타입 정의
+export type OnboardingContextType = {
+  state: {
+    currentStep: number;
+    signUpData: SignUpData;
+  };
+  actions: {
+    handleNext: () => void;
+    handlePrev: () => void;
+    handleSignUpDataChange: (data: Partial<SignUpData>) => void;
+  };
+};

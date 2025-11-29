@@ -34,7 +34,8 @@
       "@shared/*": ["src/shared/*"],
       "@store/*": ["src/store/*"],
       "@assets/*": ["src/assets/*"],
-      "@styles/*": ["src/styles/*"]
+      "@styles/*": ["src/styles/*"],
+      "@components/*": ["src/components/*"]
     }
   },
   "include": ["src"]
