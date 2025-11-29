@@ -3,6 +3,9 @@
 import type { RouteObject } from 'react-router';
 import LoginPage from '@/pages/LoginPage';
 import SignupPage from '@/pages/SignupPage';
+import SignUpLoading from '@/pages/SignUpLoading';
+import TestPages from '@/pages/TestPages';
+import TestGudie from '@/pages/TestGuide';
 
 export const AuthRoutes: RouteObject[] = [
   {
@@ -15,6 +18,18 @@ export const AuthRoutes: RouteObject[] = [
       {
         path: 'signup',
         element: <SignupPage />,
+      },
+      {
+        path: 'signuploading',
+        element: <SignUpLoading />,
+      },
+      {
+        path: 'test',
+        element: <TestPages />,
+      },
+      {
+        path: 'testguide',
+        element: <TestGudie />,
       },
     ],
   },

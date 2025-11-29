@@ -1,15 +1,12 @@
 // 로그인 페이지 (비회원도 접근 가능)
-import { useNavigate } from 'react-router';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react'; // lottie 애니메이션 사용을 위한 라이브러리
 import kakaoLoginButton from '../assets/kakao-login-button.svg';
 import googleLoginButton from '../assets/google-login-button.svg';
-
+import { useSocialLoginListener } from '@/features/auth/hooks/useSocialLoginListener';
+import { useSocialLogin } from '@/features/auth/hooks/useSocialLogin';
 function LoginPage() {
-  const navigate = useNavigate();
-
-  function handleLogin() {
-    navigate('/main/home');
-  }
+  useSocialLoginListener();
+  const { kakaoLogin, googleLogin, directLogin } = useSocialLogin();
 
   return (
     <div className="flex flex-col items-center justify-center h-screen px-20">
@@ -30,10 +27,14 @@ function LoginPage() {
       </div>
 
       <div className="flex flex-col gap-3">
-        <img src={kakaoLoginButton} />
-        <img src={googleLoginButton} className="border border-black rounded-lg" />
+        <img src={kakaoLoginButton} onClick={kakaoLogin} className="cursor-pointer" />
+        <img
+          src={googleLoginButton}
+          className="border border-black rounded-lg cursor-pointer"
+          onClick={googleLogin}
+        />
       </div>
-      <button className="mt-4" onClick={handleLogin}>
+      <button className="mt-4" onClick={directLogin}>
         Login
       </button>
     </div>
