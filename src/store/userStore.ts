@@ -3,7 +3,8 @@ import { create } from 'zustand';
 
 export const useUserStore = create<UserState>((set) => ({
   oauhId: 0,
-  name: undefined,
+  name: '',
+  gender: '',
   email: '',
   birthDate: '',
   profileImage: '',
@@ -12,8 +13,9 @@ export const useUserStore = create<UserState>((set) => ({
   setOauthId: (id) => set({ oauhId: id }),
 
   setBasicInfo: (info) =>
-    set((state) => ({
-      name: info.name ?? state.name,
+    set(() => ({
+      name: info.name,
+      gender: info.gender,
       email: info.email,
       birthDate: info.birthDate,
       profileImage: info.profileImage,
@@ -24,7 +26,8 @@ export const useUserStore = create<UserState>((set) => ({
   resetUser: () =>
     set({
       oauhId: 0,
-      name: undefined,
+      name: '',
+      gender: '',
       email: '',
       birthDate: '',
       profileImage: '',

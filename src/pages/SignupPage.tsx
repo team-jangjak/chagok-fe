@@ -1,10 +1,10 @@
+import { useEmailCheck } from '@/features/auth/hooks/useEmailCheck';
 import { useSignupForm } from '@/features/auth/hooks/useSignUpForm';
 import { useNavigate } from 'react-router';
 
 function SignupPage() {
   const navigate = useNavigate();
   const {
-    selected,
     year,
     month,
     day,
@@ -13,15 +13,40 @@ function SignupPage() {
     years,
     months,
     isComplete,
-    setSelected,
+    name,
+    gender,
     setYear,
+    setName,
+    setGender,
     setMonth,
     setDay,
     setEmail,
     handleBirthDate,
   } = useSignupForm();
 
+  const { data: emailData, isError } = useEmailCheck(email);
+  console.log('emailData =>', emailData);
+
+  const emailMessage = (() => {
+    if (!email) return '';
+    if (isError) return '잘못된 이메일 형식이거나 오류가 발생했습니다.';
+    if (!emailData) return '';
+    if (emailData.status == 200) return '사용가능한 이메일입니다.';
+    return '이미 사용중인 이메일입니다.';
+  })();
+
+  const emailMessageColor = (() => {
+    if (!email) return 'text-gray-500';
+    if (isError) return 'text-red-500';
+    if (!emailData) return 'text-gray-500';
+    if (emailData.status == 200) return 'text-green-500';
+    return 'text-red-500';
+  })();
+
+  const isEmailAvailable = emailData?.status === 200;
+
   const onSubmit = () => {
+    if (!isComplete) return;
     handleBirthDate();
     navigate('/auth/testguide');
   };
@@ -38,15 +63,23 @@ function SignupPage() {
         className="rounded-[100%] border-3 border-[#FC9E4F] w-30 h-30 ml-auto mr-auto mt-7"
       />
 
-      <p className="text-black font-bold text-[15px] mt-7">성별</p>
+      <p className="text-black font-bold text-[15px] mt-3">이름</p>
+      <input
+        type="text"
+        value={name}
+        onChange={(event) => setName(event.target.value)}
+        className="border border-[#C2C2C2] rounded-2xl mt-3 w-[100%] h-10 text-[#020122] px-3"
+      />
+
+      <p className="text-black font-bold text-[15px] mt-3">성별</p>
 
       <div className="flex items-center justify-center gap-3 mt-3">
         <button
           type="button"
-          onClick={() => setSelected('남자')}
+          onClick={() => setGender('남자')}
           className={`
           w-30 px-6 py-2 rounded-lg font-medium transition-colors
-          ${selected === '남자' ? '!bg-[#FC9E4F] text-white' : '!bg-[#E2E2E2] text-white'}
+          ${gender === '남자' ? '!bg-[#FC9E4F] text-white' : '!bg-[#E2E2E2] text-white'}
         `}
         >
           남
@@ -54,17 +87,17 @@ function SignupPage() {
 
         <button
           type="button"
-          onClick={() => setSelected('여자')}
+          onClick={() => setGender('여자')}
           className={`
           w-30 px-6 py-2 rounded-lg font-medium transition-colors
-          ${selected === '여자' ? '!bg-[#FC9E4F] text-white' : '!bg-[#E2E2E2] text-white'}
+          ${gender === '여자' ? '!bg-[#FC9E4F] text-white' : '!bg-[#E2E2E2] text-white'}
         `}
         >
           여
         </button>
       </div>
 
-      <div className="mt-10">
+      <div className="mt-3">
         <p className="text-[#020122] font-bold text-[15px]">생년월일</p>
         <div className="flex gap-4 text-[#020122] justify-center mt-3">
           <select
@@ -109,7 +142,7 @@ function SignupPage() {
       </div>
 
       <div>
-        <p className="text-[#020122] mt-10 font-bold text-[15px]">이메일 입력</p>
+        <p className="text-[#020122] mt-3 font-bold text-[15px]">이메일 입력</p>
         <input
           type="text"
           placeholder="이메일 입력 (ex. gichul@kakao.com)"
@@ -117,6 +150,7 @@ function SignupPage() {
           onChange={(event) => setEmail(event.target.value)}
           className="border border-[#C2C2C2] rounded-2xl mt-3 w-[100%] h-10 text-[#020122] px-3"
         />
+        {email && <p className={`text-[12px] mt-1 ${emailMessageColor}`}>{emailMessage}</p>}
       </div>
 
       <div>
@@ -125,10 +159,10 @@ function SignupPage() {
         </p>
         <div className="text-center mt-3">
           <button
-            disabled={!isComplete}
+            disabled={!isComplete || !isEmailAvailable}
             onClick={onSubmit}
             className={` w-85 h-12 transition-colors ${
-              isComplete
+              isComplete && isEmailAvailable
                 ? '!bg-[#FF5218] text-white cursor-pointer'
                 : '!bg-[#E2E2E2] text-white cursor-not-allowed'
             }`}

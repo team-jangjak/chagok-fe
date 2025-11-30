@@ -15,6 +15,7 @@ function SliderQuestion({ question, onChange }: SliderQuestionProps) {
       <input
         type="range"
         min={0}
+        step={10}
         max={100}
         value={value}
         onChange={handleSlider}

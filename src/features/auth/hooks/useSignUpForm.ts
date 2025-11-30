@@ -8,7 +8,8 @@ export function useSignupForm() {
   const years = Array.from({ length: 100 }, (_, i) => currentYear - i);
   const months = Array.from({ length: 12 }, (_, i) => i + 1);
 
-  const [selected, setSelected] = useState('');
+  const [name, setName] = useState('');
+  const [gender, setGender] = useState<'' | '남자' | '여자'>('');
   const [year, setYear] = useState('');
   const [month, setMonth] = useState('');
   const [day, setDay] = useState('');
@@ -31,13 +32,15 @@ export function useSignupForm() {
     }
   }, [day, year, month]);
 
-  const isComplete = selected && year && month && day && email;
+  const isComplete =
+    name !== '' && gender !== '' && year !== '' && month !== '' && day !== '' && email !== '';
 
   const handleBirthDate = () => {
     const birthDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
 
     setBasicInfo({
-      name: selected,
+      name,
+      gender: gender as '남자' | '여자',
       email,
       birthDate,
       profileImage: 'https://cdn.chagok.shop/avatars/default.png',
@@ -50,7 +53,9 @@ export function useSignupForm() {
     currentYear,
     years,
     months,
-    selected,
+    name,
+    gender,
+
     year,
     month,
     day,
@@ -58,7 +63,8 @@ export function useSignupForm() {
     email,
     isComplete,
 
-    setSelected,
+    setName,
+    setGender,
     setYear,
     setMonth,
     setDay,
