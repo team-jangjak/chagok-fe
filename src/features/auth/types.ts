@@ -6,6 +6,7 @@ export interface SignUpData {
   birthDate: string; // 사용자 생년월일 (yyyy-MM-dd 형식)
   profileImage: string; // 사용자 프로필 이미지 (S3에서 업로드 해서 받은 이미지 url)
   tendency: number; // 사용자 성향 점수 (0~100점)
+  gender: 'male' | 'female'; // 사용자 성별
 }
 
 // OnboardingContext에서의 타입 정의

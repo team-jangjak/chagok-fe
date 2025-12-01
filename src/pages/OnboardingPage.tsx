@@ -21,7 +21,7 @@ function OnboardingContent() {
   } = useOnboarding();
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen px-8 relative">
+    <div className="flex flex-col items-center justify-start h-screen px-8 py-16 relative">
       {currentStep === 0 && <OnboardingPage1 />}
       {currentStep === 1 && <OnboardingPage2 />}
     </div>

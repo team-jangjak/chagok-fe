@@ -16,6 +16,7 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
     birthDate: '',
     profileImage: '',
     tendency: 0,
+    gender: 'male',
   });
 
   const handleSignUpDataChange = (data: Partial<SignUpData>) => {

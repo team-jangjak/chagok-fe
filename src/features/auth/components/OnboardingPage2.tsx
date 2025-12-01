@@ -3,10 +3,13 @@
 import { useOnboarding } from '@features/auth/contexts/useOnboarding';
 import PrimaryButton from '@shared/ui/PrimaryButton';
 import { Avatar, AvatarImage, AvatarFallback } from '@components/ui/avatar';
+import { Button } from '@components/ui/button';
+import { DatePicker } from '@shared/ui/DatePicker';
+import { DataInput } from '@shared/ui/DataInput';
 
 function OnboardingPage2() {
   const {
-    actions: { handleNext },
+    actions: { handleNext, handleSignUpDataChange },
   } = useOnboarding();
 
   return (
@@ -22,6 +25,24 @@ function OnboardingPage2() {
           <AvatarImage src="https://github.com/shadcn.png" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
+      </div>
+      {/* '성별 선택' 영역 */}
+      <div className="w-full flex flex-col gap-2 mb-8">
+        <span className="text-xl font-medium text-text">성별</span>
+        <div className="grid grid-cols-2 gap-4">
+          <Button onClick={() => handleSignUpDataChange({ gender: 'male' })}>남성</Button>
+          <Button onClick={() => handleSignUpDataChange({ gender: 'female' })}>여성</Button>
+        </div>
+      </div>
+      {/* '생년월일 선택' 영역 */}
+      <div className="w-full flex flex-col gap-2 mb-8">
+        <span className="text-xl font-medium text-text">생년월일</span>
+        <DatePicker id="birthDate" className="w-full" />
+      </div>
+      {/* '이메일' 영역 */}
+      <div className="w-full flex flex-col gap-2 mb-8">
+        <span className="text-xl font-medium text-text">이메일</span>
+        <DataInput id="email" placeholder="이메일 입력 (ex. gichul@kakao.com)" className="w-full" />
       </div>
       <PrimaryButton onClick={handleNext} disabled>
         완료
