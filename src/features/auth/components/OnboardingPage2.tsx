@@ -3,14 +3,13 @@ import { useState } from 'react';
 import { useOnboarding } from '@features/auth/contexts/useOnboarding';
 import PrimaryButton from '@shared/ui/PrimaryButton';
 import { Avatar, AvatarImage, AvatarFallback } from '@components/ui/avatar';
-import { Button } from '@components/ui/button';
 import { DatePicker } from '@shared/ui/DatePicker';
 import { DataInput } from '@shared/ui/DataInput';
 import PillButton from '@shared/ui/PillButton';
 
 function OnboardingPage2() {
   const {
-    actions: { handleNext, handleSignUpDataChange },
+    actions: { handleNext },
   } = useOnboarding();
 
   const [options, setOptions] = useState({
@@ -19,6 +18,12 @@ function OnboardingPage2() {
     '옵션 3': true,
     '옵션 4': false,
   });
+
+  const [gender, setGender] = useState<'male' | 'female'>('male');
+
+  const handleGenderClick = (gender: 'male' | 'female') => {
+    setGender(gender);
+  };
 
   const handleOptionClick = (option: keyof typeof options) => {
     setOptions((prev) => ({ ...prev, [option]: !prev[option] }));
@@ -42,8 +47,20 @@ function OnboardingPage2() {
       <div className="w-full flex flex-col gap-2 mb-8">
         <span className="text-xl font-medium text-text">성별</span>
         <div className="grid grid-cols-2 gap-4">
-          <Button onClick={() => handleSignUpDataChange({ gender: 'male' })}>남성</Button>
-          <Button onClick={() => handleSignUpDataChange({ gender: 'female' })}>여성</Button>
+          <PillButton
+            className="py-2 text-lg"
+            isSelected={gender === 'male'}
+            handleOptionClick={() => handleGenderClick('male')}
+          >
+            남자
+          </PillButton>
+          <PillButton
+            className="py-2 text-lg"
+            isSelected={gender === 'female'}
+            handleOptionClick={() => handleGenderClick('female')}
+          >
+            여자
+          </PillButton>
         </div>
       </div>
       {/* '생년월일 선택' 영역 */}
@@ -62,6 +79,7 @@ function OnboardingPage2() {
         <div className="grid grid-cols-4 gap-2">
           {Object.entries(options).map(([option, isSelected]) => (
             <PillButton
+              className="py-1 text-sm"
               isSelected={isSelected}
               key={option}
               handleOptionClick={() => handleOptionClick(option as keyof typeof options)}
@@ -71,7 +89,7 @@ function OnboardingPage2() {
           ))}
         </div>
       </div>
-      <PrimaryButton onClick={handleNext} disabled>
+      <PrimaryButton onClick={handleNext} isEnabled={true}>
         완료
       </PrimaryButton>
     </>

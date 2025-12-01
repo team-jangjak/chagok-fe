@@ -15,7 +15,9 @@ function OnboardingPage1() {
       <span className="text-2xl font-bold text-gray-900">회원님께 더 좋은 서비스를</span>
       <span className="text-2xl font-bold text-gray-900">제공하기 위해서,</span>
       <span className="text-2xl font-bold text-gray-900">추가적인 정보가 필요해요.</span>
-      <PrimaryButton onClick={handleNext}>다음</PrimaryButton>
+      <PrimaryButton onClick={handleNext} isEnabled={true}>
+        다음
+      </PrimaryButton>
     </div>
   );
 }
