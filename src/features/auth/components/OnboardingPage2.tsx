@@ -1,16 +1,28 @@
 // 온보딩 페이지 중 2번째 페이지 ('프로필 입력' 페이지)
-
+import { useState } from 'react';
 import { useOnboarding } from '@features/auth/contexts/useOnboarding';
 import PrimaryButton from '@shared/ui/PrimaryButton';
 import { Avatar, AvatarImage, AvatarFallback } from '@components/ui/avatar';
 import { Button } from '@components/ui/button';
 import { DatePicker } from '@shared/ui/DatePicker';
 import { DataInput } from '@shared/ui/DataInput';
+import PillButton from '@shared/ui/PillButton';
 
 function OnboardingPage2() {
   const {
     actions: { handleNext, handleSignUpDataChange },
   } = useOnboarding();
+
+  const [options, setOptions] = useState({
+    '옵션 1': false,
+    '옵션 2': false,
+    '옵션 3': true,
+    '옵션 4': false,
+  });
+
+  const handleOptionClick = (option: keyof typeof options) => {
+    setOptions((prev) => ({ ...prev, [option]: !prev[option] }));
+  };
 
   return (
     <>
@@ -43,6 +55,21 @@ function OnboardingPage2() {
       <div className="w-full flex flex-col gap-2 mb-8">
         <span className="text-xl font-medium text-text">이메일</span>
         <DataInput id="email" placeholder="이메일 입력 (ex. gichul@kakao.com)" className="w-full" />
+      </div>
+      {/* '옵션' 영역 */}
+      <div className="w-full flex flex-col gap-2 mb-8">
+        <span className="text-xl font-medium text-text">옵션</span>
+        <div className="grid grid-cols-4 gap-2">
+          {Object.entries(options).map(([option, isSelected]) => (
+            <PillButton
+              isSelected={isSelected}
+              key={option}
+              handleOptionClick={() => handleOptionClick(option as keyof typeof options)}
+            >
+              {option}
+            </PillButton>
+          ))}
+        </div>
       </div>
       <PrimaryButton onClick={handleNext} disabled>
         완료
