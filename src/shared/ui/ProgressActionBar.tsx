@@ -30,7 +30,7 @@ function ProgressActionBar({
       {/* 왼쪽의 '뒤로가기' 버튼 */}
       <ChevronLeft className="w-6 h-6 cursor-pointer" onClick={handlePrev} />
       {/* 오른쪽의 진행 상태 표시 영역 */}
-      <div className={`w-full ml-5 grid grid-flow-col grid-cols-${totalSteps} gap-3`}>
+      <div className={`w-full ml-6 grid grid-flow-col grid-cols-${totalSteps} gap-3`}>
         {Array.from({ length: totalSteps }).map((_, index) => (
           <div
             className={cn(
