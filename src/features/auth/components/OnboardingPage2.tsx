@@ -6,6 +6,7 @@ import { Avatar, AvatarImage, AvatarFallback } from '@components/ui/avatar';
 import { DatePicker } from '@shared/ui/DatePicker';
 import { DataInput } from '@shared/ui/DataInput';
 import PillButton from '@shared/ui/PillButton';
+import RadioButton from '@shared/ui/RadioButton';
 
 function OnboardingPage2() {
   const {
@@ -61,6 +62,20 @@ function OnboardingPage2() {
           >
             여자
           </PillButton>
+        </div>
+      </div>
+      {/* '체크박스 선택' 영역 */}
+      <div className="w-full flex flex-col gap-2 mb-8">
+        <span className="text-xl font-medium text-text">체크박스 선택</span>
+        <div className="grid grid-cols-4 gap-2">
+          {Object.entries(options).map(([option, isSelected]) => (
+            <RadioButton
+              className="w-8 h-8"
+              isChecked={isSelected}
+              key={option}
+              handleOptionClick={() => handleOptionClick(option as keyof typeof options)}
+            />
+          ))}
         </div>
       </div>
       {/* '생년월일 선택' 영역 */}
