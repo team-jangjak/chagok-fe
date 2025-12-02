@@ -3,13 +3,14 @@ import react from '@vitejs/plugin-react'; // React 플러그인 추가
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import tailwind from '@tailwindcss/vite';
+import svgr from 'vite-plugin-svgr';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwind()],
+  plugins: [react(), tailwind(), svgr()],
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
