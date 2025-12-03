@@ -37,15 +37,15 @@ body {
 :root {
   --radius: 0.625rem;
 
-  /* 🎨 디자인 시스템 메인 색상 */
+  /* 디자인 시스템 메인 색상 */
   --primary: #ff521b;
   --primary-foreground: #ffffff;
   --secondary: #fc9e4f;
   --secondary-foreground: #020122;
 
-  /* 🎨 커스텀 그레이 스케일 */
-  --lightgray: #c2c2c2;
-  --gray: #e2e2e2;
+  /* 커스텀 그레이 스케일 */
+  --lightgray: #e2e2e2;
+  --gray: #c2c2c2;
   --darkgray: #707070;
 
   /* 기본 색상 */

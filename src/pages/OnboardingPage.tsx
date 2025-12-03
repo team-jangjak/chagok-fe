@@ -23,7 +23,7 @@ function OnboardingContent() {
   } = useOnboarding();
 
   return (
-    <div className="flex flex-col items-center justify-start h-screen px-8 py-16 relative">
+    <div className="flex flex-col items-center justify-start h-full px-8 py-8 relative">
       <ProgressActionBar handlePrev={handlePrev} totalSteps={4} currentStep={currentStep} />
       {currentStep === 0 && <OnboardingPage1 />}
       {currentStep === 1 && <OnboardingPage2 />}

@@ -15,7 +15,7 @@ import { formatDate } from '@shared/utils/formatDate';
 	className: 컴포넌트 스타일
 	props: 컴포넌트에 넘어오는 props (onChange, value 등)
 */
-export function DatePicker({ className, ...props }: React.ComponentProps<'input'>) {
+function DatePicker({ className, ...props }: React.ComponentProps<'input'>) {
   const [open, setOpen] = useState(false);
   const [date, setDate] = useState<Date | undefined>(undefined);
   const [month, setMonth] = useState<Date | undefined>(date);
@@ -29,7 +29,10 @@ export function DatePicker({ className, ...props }: React.ComponentProps<'input'
           {...props}
           value={value}
           placeholder="YYYY-MM-DD"
-          className={cn('bg-background pr-10 text-text text-sm placeholder:text-gray', className)}
+          className={cn(
+            'bg-background pr-10 text-text text-sm placeholder:text-lightgray',
+            className
+          )}
           onChange={(e) => {
             // 자동 하이픈 삽입
             const formattedValue = formatDateInput(e.target.value, value);
@@ -86,3 +89,5 @@ export function DatePicker({ className, ...props }: React.ComponentProps<'input'
     </div>
   );
 }
+
+export default DatePicker;

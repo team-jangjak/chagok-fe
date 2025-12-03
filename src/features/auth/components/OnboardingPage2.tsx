@@ -3,10 +3,11 @@ import { useState } from 'react';
 import { useOnboarding } from '@features/auth/contexts/useOnboarding';
 import PrimaryButton from '@shared/ui/PrimaryButton';
 import { Avatar, AvatarImage, AvatarFallback } from '@components/ui/avatar';
-import { DatePicker } from '@shared/ui/DatePicker';
-import { DataInput } from '@shared/ui/DataInput';
+import DatePicker from '@shared/ui/DatePicker';
+import DataInput from '@shared/ui/DataInput';
 import PillButton from '@shared/ui/PillButton';
 import RadioButton from '@shared/ui/RadioButton';
+import DropdownMenu from '@/shared/ui/DropdownMenu';
 
 function OnboardingPage2() {
   const {
@@ -102,6 +103,25 @@ function OnboardingPage2() {
               {option}
             </PillButton>
           ))}
+        </div>
+      </div>
+      {/* '드롭다운'으로 옵션 선택하는 영역 */}
+      <div className="w-full flex flex-col gap-2 mb-8">
+        <span className="text-xl font-medium text-text">드롬다운 테스트</span>
+        <div className="w-full grid grid-cols-2 gap-2">
+          <DropdownMenu
+            options={['옵션 1', '옵션 2', '옵션 3', '옵션 4']}
+            placeholder="옵션 선택해주셈1"
+          />
+          <DropdownMenu
+            options={['옵션 1', '옵션 2', '옵션 3', '옵션 4']}
+            placeholder="옵션 선택해주셈2"
+          />
+        </div>
+        <div className="w-full grid grid-cols-3 gap-2">
+          <DropdownMenu options={['일', '월', '년']} placeholder="기간단위" />
+          <DropdownMenu options={['개', '명', '초']} placeholder="수량단위" />
+          <DropdownMenu options={['허준호', '허주노', '기처리', '집갈래']} placeholder="이름" />
         </div>
       </div>
       <PrimaryButton onClick={handleNext} isEnabled={true}>

@@ -30,7 +30,7 @@ function PillButton({
         'w-full flex items-center justify-center rounded-md text-sm font-medium transition-all duration-200',
         isSelected
           ? 'bg-primary border border-primary text-white'
-          : 'bg-white border border-gray text-gray',
+          : 'bg-white border border-lightgray text-lightgray',
         className // 상위 컴포넌트로부터 넘어온 스타일 적용
       )}
       onClick={handleOptionClick}

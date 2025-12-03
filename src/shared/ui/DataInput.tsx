@@ -7,11 +7,13 @@
 import { Input } from '@components/ui/input';
 import { cn } from '@/lib/utils';
 
-export function DataInput({ className, ...props }: React.ComponentProps<'input'>) {
+function DataInput({ className, ...props }: React.ComponentProps<'input'>) {
   return (
     <Input
       placeholder={props.placeholder ?? '정보를 입력해주세요'}
-      className={cn('bg-background pr-10 text-text text-sm placeholder:text-gray', className)}
+      className={cn('bg-background pr-10 text-text text-sm placeholder:text-lightgray', className)}
     />
   );
 }
+
+export default DataInput;

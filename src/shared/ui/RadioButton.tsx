@@ -19,7 +19,7 @@ function RadioButton({ className, isChecked, handleOptionClick }: RadioButtonPro
       className={cn(
         'w-7 h-7 flex items-center justify-center rounded-[10px] border transition-all duration-200',
         // 체크 된 경우와 아닌 경우에 대해서 디자인이 달라야 한다
-        isChecked ? 'border-primary bg-primary' : 'border-gray bg-white',
+        isChecked ? 'border-primary bg-primary' : 'border-lightgray bg-white',
 
         // 상위 컴포넌트로부터 넘어온 스타일 적용 (없으면 적용 안함)
         className

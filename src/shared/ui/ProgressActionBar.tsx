@@ -37,7 +37,7 @@ function ProgressActionBar({
               // 기본 디자인
               'w-full h-2 bg-gray rounded-2xl',
               // 현재 진행 단계보다 작은 경우 primary 색상으로 변경
-              index <= currentStep ? 'bg-primary' : 'bg-gray'
+              index <= currentStep ? 'bg-primary' : 'bg-lightgray'
             )}
           />
         ))}
