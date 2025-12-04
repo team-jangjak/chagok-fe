@@ -6,7 +6,7 @@ import tseslint from 'typescript-eslint';
 import { defineConfig, globalIgnores } from 'eslint/config';
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(['dist', 'src/components/ui']), // ShadCN 컴포넌트는 lint 제외
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
