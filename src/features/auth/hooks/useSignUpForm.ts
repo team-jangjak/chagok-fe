@@ -2,19 +2,19 @@ import { useEffect, useState } from 'react';
 import { useUserStore } from '@/store/userStore';
 
 export function useSignupForm() {
-  const setBasicInfo = useUserStore((set) => set.setBasicInfo);
+  const user = useUserStore();
 
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 100 }, (_, i) => currentYear - i);
   const months = Array.from({ length: 12 }, (_, i) => i + 1);
 
-  const [name, setName] = useState('');
+  const [name, setName] = useState(user.name);
   const [gender, setGender] = useState<'' | '남자' | '여자'>('');
   const [year, setYear] = useState('');
   const [month, setMonth] = useState('');
   const [day, setDay] = useState('');
   const [days, setDays] = useState<number[]>([]);
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState(user.email);
 
   useEffect(() => {
     if (year && month) {
@@ -38,12 +38,12 @@ export function useSignupForm() {
   const handleBirthDate = () => {
     const birthDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
 
-    setBasicInfo({
+    user.setBasicInfo({
       name,
       gender: gender as '남자' | '여자',
       email,
       birthDate,
-      profileImage: 'https://cdn.chagok.shop/avatars/default.png',
+      profileImage: user.profileImage,
     });
 
     return birthDate;

@@ -4,17 +4,9 @@ import type { TestPageProps } from '@/shared/types';
 function TestPage({ question, content, choices, onAnswer }: TestPageProps) {
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
 
-  const scores = {
-    option1: 1,
-    option2: 2,
-    option3: 3,
-    option4: 4,
-  };
-
   const handleNext = () => {
     if (selectedOption !== null) {
-      const score = scores[`option${selectedOption}` as keyof typeof scores];
-      onAnswer(score);
+      onAnswer(selectedOption);
       setSelectedOption(null);
     }
   };

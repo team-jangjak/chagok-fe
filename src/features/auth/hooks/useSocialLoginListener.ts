@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router';
 
 export function useSocialLoginListener() {
   const navigate = useNavigate();
-  const setOauthId = useUserStore((set) => set.setOauthId);
+  const { setBasicInfo, setOauthId } = useUserStore();
 
   useEffect(() => {
     function onMessage(event: MessageEvent) {
@@ -18,10 +18,17 @@ export function useSocialLoginListener() {
 
       if (data.type === 'NEW_USER_SIGNUP') {
         if (data.oauthId) setOauthId(Number(data.oauthId));
+        setBasicInfo({
+          name: data.name ?? '',
+          gender: '',
+          email: data.email ?? '',
+          birthDate: '',
+          profileImage: data.profileImage ?? 'https://cdn.chagok.shop/avatars/default.png',
+        });
         navigate(`/auth/signuploading`);
       }
     }
     window.addEventListener('message', onMessage);
     return () => window.removeEventListener('message', onMessage);
-  }, [navigate, setOauthId]);
+  }, [navigate, setOauthId, setBasicInfo]);
 }

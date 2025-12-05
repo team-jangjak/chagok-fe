@@ -2,7 +2,7 @@ import type { UserState } from '@/shared/types';
 import { create } from 'zustand';
 
 export const useUserStore = create<UserState>((set) => ({
-  oauhId: 0,
+  oauthId: 0,
   name: '',
   gender: '',
   email: '',
@@ -10,7 +10,7 @@ export const useUserStore = create<UserState>((set) => ({
   profileImage: '',
   tendency: 0,
 
-  setOauthId: (id) => set({ oauhId: id }),
+  setOauthId: (id) => set({ oauthId: id }),
 
   setBasicInfo: (info) =>
     set(() => ({
@@ -25,7 +25,7 @@ export const useUserStore = create<UserState>((set) => ({
 
   resetUser: () =>
     set({
-      oauhId: 0,
+      oauthId: 0,
       name: '',
       gender: '',
       email: '',

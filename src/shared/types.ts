@@ -1,5 +1,5 @@
 export interface userinfo {
-  oauhId: number;
+  oauthId: number;
   name: string;
   gender: '' | '남자' | '여자';
   email: string;
@@ -12,7 +12,7 @@ export interface UserState extends userinfo {
   setOauthId: (id: number) => void;
   setBasicInfo: (info: {
     name: string;
-    gender: '남자' | '여자';
+    gender: '' | '남자' | '여자';
     email: string;
     birthDate: string;
     profileImage: string;

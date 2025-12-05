@@ -1,5 +1,6 @@
 import { useEmailCheck } from '@/features/auth/hooks/useEmailCheck';
 import { useSignupForm } from '@/features/auth/hooks/useSignUpForm';
+import { useUserStore } from '@/store/userStore';
 import { useNavigate } from 'react-router';
 
 function SignupPage() {
@@ -23,6 +24,8 @@ function SignupPage() {
     setEmail,
     handleBirthDate,
   } = useSignupForm();
+
+  const profileImage = useUserStore((state) => state.profileImage);
 
   const { data: emailData, isError } = useEmailCheck(email);
   console.log('emailData =>', emailData);
@@ -59,7 +62,7 @@ function SignupPage() {
       </div>
 
       <img
-        src="#"
+        src={profileImage || 'https://cdn.chagok.shop/avatars/default.png'}
         className="rounded-[100%] border-3 border-[#FC9E4F] w-30 h-30 ml-auto mr-auto mt-7"
       />
 
