@@ -1,4 +1,11 @@
 {
+  // shadcn/ui 사용 시 필요 (shadcn CLI는 루트 tsconfig.json에서만 확인)
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
   "files": [],
   "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }]
 }
