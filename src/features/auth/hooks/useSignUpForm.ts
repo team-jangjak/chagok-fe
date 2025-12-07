@@ -1,43 +1,33 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useUserStore } from '@/store/userStore';
 
 export function useSignupForm() {
   const user = useUserStore();
 
-  const currentYear = new Date().getFullYear();
-  const years = Array.from({ length: 100 }, (_, i) => currentYear - i);
-  const months = Array.from({ length: 12 }, (_, i) => i + 1);
-
   const [name, setName] = useState(user.name);
   const [gender, setGender] = useState<'' | '남자' | '여자'>('');
-  const [year, setYear] = useState('');
-  const [month, setMonth] = useState('');
-  const [day, setDay] = useState('');
-  const [days, setDays] = useState<number[]>([]);
+  const [birthDate, setBirthDate] = useState(user.birthDate ?? '');
   const [email, setEmail] = useState(user.email);
 
-  useEffect(() => {
-    if (year && month) {
-      const max = new Date(Number(year), Number(month), 0).getDate();
-      setDays(Array.from({ length: max }, (_, i) => i + 1));
-    }
-  }, [year, month]);
+  function isValidBirthDate(dateString: string) {
+    // 형식 체크
+    const regex = /^\d{4}-\d{2}-\d{2}$/;
+    if (!regex.test(dateString)) return false;
 
-  useEffect(() => {
-    if (!year || !month) return;
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return false;
 
-    const max = new Date(Number(year), Number(month), 0).getDate();
-    if (day && Number(day) > max) {
-      setDay('');
-    }
-  }, [day, year, month]);
+    // 역검증: "2024-02-30" 같은 경우 걸러짐
+    const [y, m, d] = dateString.split('-').map(Number);
 
-  const isComplete =
-    name !== '' && gender !== '' && year !== '' && month !== '' && day !== '' && email !== '';
+    const valid = date.getFullYear() === y && date.getMonth() + 1 === m && date.getDate() === d;
+
+    return valid;
+  }
+
+  const isComplete = name !== '' && gender !== '' && birthDate !== '' && email !== '' && isValidBirthDate(birthDate);
 
   const handleBirthDate = () => {
-    const birthDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-
     user.setBasicInfo({
       name,
       gender: gender as '남자' | '여자',
@@ -50,24 +40,15 @@ export function useSignupForm() {
   };
 
   return {
-    currentYear,
-    years,
-    months,
     name,
     gender,
-
-    year,
-    month,
-    day,
-    days,
+    birthDate,
     email,
     isComplete,
 
     setName,
     setGender,
-    setYear,
-    setMonth,
-    setDay,
+    setBirthDate,
     setEmail,
 
     handleBirthDate,

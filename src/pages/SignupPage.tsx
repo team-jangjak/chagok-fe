@@ -1,34 +1,29 @@
 import { useEmailCheck } from '@/features/auth/hooks/useEmailCheck';
 import { useSignupForm } from '@/features/auth/hooks/useSignUpForm';
+import DataInput from '@/shared/ui/DataInput';
+import DatePicker from '@/shared/ui/DatePicker';
+import PillButton from '@/shared/ui/PillButton';
 import { useUserStore } from '@/store/userStore';
 import { useNavigate } from 'react-router';
 
 function SignupPage() {
   const navigate = useNavigate();
   const {
-    year,
-    month,
-    day,
-    days,
     email,
-    years,
-    months,
     isComplete,
+    birthDate,
     name,
     gender,
-    setYear,
     setName,
     setGender,
-    setMonth,
-    setDay,
     setEmail,
+    setBirthDate,
     handleBirthDate,
   } = useSignupForm();
 
   const profileImage = useUserStore((state) => state.profileImage);
 
   const { data: emailData, isError } = useEmailCheck(email);
-  console.log('emailData =>', emailData);
 
   const emailMessage = (() => {
     if (!email) return '';
@@ -67,92 +62,53 @@ function SignupPage() {
       />
 
       <p className="text-black font-bold text-[15px] mt-3">이름</p>
-      <input
-        type="text"
+      <DataInput
         value={name}
+        placeholder='이름을 입력해주세요'
         onChange={(event) => setName(event.target.value)}
-        className="border border-[#C2C2C2] rounded-2xl mt-3 w-[100%] h-10 text-[#020122] px-3"
+        className="border border-[#C2C2C2] rounded-2xl text-[#020122] mt-3"
       />
 
       <p className="text-black font-bold text-[15px] mt-3">성별</p>
 
       <div className="flex items-center justify-center gap-3 mt-3">
-        <button
-          type="button"
-          onClick={() => setGender('남자')}
+        <PillButton
+          isSelected={gender == '남자'}
+          handleOptionClick={() => setGender('남자')}
           className={`
-          w-30 px-6 py-2 rounded-lg font-medium transition-colors
-          ${gender === '남자' ? '!bg-[#FC9E4F] text-white' : '!bg-[#E2E2E2] text-white'}
+          w-30 px-6 py-2 rounded-lg font-medium transition-colors  
         `}
         >
           남
-        </button>
+        </PillButton>
 
-        <button
-          type="button"
-          onClick={() => setGender('여자')}
+        <PillButton
+          isSelected={gender == '여자'}
+          handleOptionClick={() => setGender('여자')}
           className={`
           w-30 px-6 py-2 rounded-lg font-medium transition-colors
-          ${gender === '여자' ? '!bg-[#FC9E4F] text-white' : '!bg-[#E2E2E2] text-white'}
         `}
         >
           여
-        </button>
+        </PillButton>
       </div>
 
       <div className="mt-3">
         <p className="text-[#020122] font-bold text-[15px]">생년월일</p>
-        <div className="flex gap-4 text-[#020122] justify-center mt-3">
-          <select
-            value={year}
-            onChange={(event) => setYear(event.target.value)}
-            className="border border-[#B0B0B0] w-22 h-10"
-          >
-            <option value="">연도</option>
-            {years.map((year) => (
-              <option key={year} value={year}>
-                {year}
-              </option>
-            ))}
-          </select>
-
-          <select
-            value={month}
-            onChange={(event) => setMonth(event.target.value)}
-            className="border border-[#B0B0B0] w-22 h-10"
-          >
-            <option value="">월</option>
-            {months.map((month) => (
-              <option key={month} value={month}>
-                {month}
-              </option>
-            ))}
-          </select>
-
-          <select
-            value={day}
-            onChange={(event) => setDay(event.target.value)}
-            className="border border-[#B0B0B0] w-22 h-10"
-          >
-            <option value="">일</option>
-            {days.map((day) => (
-              <option key={day} value={day}>
-                {day}
-              </option>
-            ))}
-          </select>
+        <div className='mt-3'>
+          <DatePicker value={birthDate} 
+          onChange={(e) => setBirthDate(e.target.value)}
+          className="border border-[#C2C2C2] rounded-2xl text-[#020122]"
+          />
         </div>
       </div>
 
       <div>
         <p className="text-[#020122] mt-3 font-bold text-[15px]">이메일 입력</p>
-        <input
-          type="text"
-          placeholder="이메일 입력 (ex. gichul@kakao.com)"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          className="border border-[#C2C2C2] rounded-2xl mt-3 w-[100%] h-10 text-[#020122] px-3"
-        />
+        <DataInput
+        type='text' placeholder='이메일 입력 (ex. gichul@kakao.com)' 
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}/>
         {email && <p className={`text-[12px] mt-1 ${emailMessageColor}`}>{emailMessage}</p>}
       </div>
 

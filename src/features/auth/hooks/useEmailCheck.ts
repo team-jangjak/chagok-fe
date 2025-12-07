@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import { checkEmail } from '../api/check-Email';
+import { checkEmail } from '../api/checkEmail';
 
 export function useEmailCheck(email: string) {
   const [debouncedEmail, setDebouncedEmail] = useState(email);
