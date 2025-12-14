@@ -10,7 +10,6 @@ function LoginPage() {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      
       <div className="flex flex-col items-center justify-center h-screen px-20">
         <span className="text-4xl font-extrabold text-gray-900">차곡차곡</span>
         <div className="mt-5">

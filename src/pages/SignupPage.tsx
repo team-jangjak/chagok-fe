@@ -16,6 +16,7 @@ function SignupPage() {
     gender,
     setName,
     setGender,
+    isEmailVaild,
     setEmail,
     setBirthDate,
     handleBirthDate,
@@ -23,28 +24,24 @@ function SignupPage() {
 
   const profileImage = useUserStore((state) => state.profileImage);
 
-  const { data: emailData, isError } = useEmailCheck(email);
+  const { data: emailData, isError } = useEmailCheck(isEmailVaild ? email : '');
 
-  const emailMessage = (() => {
-    if (!email) return '';
-    if (isError) return '잘못된 이메일 형식이거나 오류가 발생했습니다.';
-    if (!emailData) return '';
-    if (emailData.status == 200) return '사용가능한 이메일입니다.';
-    return '이미 사용중인 이메일입니다.';
+  const emailStatus: { message: string; color: string } | null = (() => {
+    if (!email) return null;
+    if (!isEmailVaild)
+      return { message: '이메일 형식이 올바르지 않습니다.', color: 'text-red-500' };
+    if (isError) return { message: '오류가 발생했습니다.', color: 'text-red-500' };
+    if (!emailData) return null; // debounce / 응답 대기
+    if (emailData.status === 200)
+      return { message: '사용가능한 이메일입니다.', color: 'text-green-500' };
+    return { message: '이미 사용중인 이메일입니다.', color: 'text-red-500' };
   })();
 
-  const emailMessageColor = (() => {
-    if (!email) return 'text-gray-500';
-    if (isError) return 'text-red-500';
-    if (!emailData) return 'text-gray-500';
-    if (emailData.status == 200) return 'text-green-500';
-    return 'text-red-500';
-  })();
-
-  const isEmailAvailable = emailData?.status === 200;
+  const isEmailAvailable = isEmailVaild && emailData?.status === 200;
+  const canSubmit = isComplete && isEmailAvailable;
 
   const onSubmit = () => {
-    if (!isComplete) return;
+    if (!canSubmit) return;
     handleBirthDate();
     navigate('/auth/testguide');
   };
@@ -64,7 +61,7 @@ function SignupPage() {
       <p className="text-black font-bold text-[15px] mt-3">이름</p>
       <DataInput
         value={name}
-        placeholder='이름을 입력해주세요'
+        placeholder="이름을 입력해주세요"
         onChange={(event) => setName(event.target.value)}
         className="border border-[#C2C2C2] rounded-2xl text-[#020122] mt-3"
       />
@@ -95,10 +92,11 @@ function SignupPage() {
 
       <div className="mt-3">
         <p className="text-[#020122] font-bold text-[15px]">생년월일</p>
-        <div className='mt-3'>
-          <DatePicker value={birthDate} 
-          onChange={(e) => setBirthDate(e.target.value)}
-          className="border border-[#C2C2C2] rounded-2xl text-[#020122]"
+        <div className="mt-3">
+          <DatePicker
+            value={birthDate}
+            onChange={(e) => setBirthDate(e.target.value)}
+            className="border border-[#C2C2C2] rounded-2xl text-[#020122]"
           />
         </div>
       </div>
@@ -106,10 +104,15 @@ function SignupPage() {
       <div>
         <p className="text-[#020122] mt-3 font-bold text-[15px]">이메일 입력</p>
         <DataInput
-        type='text' placeholder='이메일 입력 (ex. gichul@kakao.com)' 
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}/>
-        {email && <p className={`text-[12px] mt-1 ${emailMessageColor}`}>{emailMessage}</p>}
+          type="email"
+          placeholder="이메일 입력 (ex. gichul@kakao.com)"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="border border-[#C2C2C2] rounded-2xl text-[#020122] mt-3"
+        />
+        {emailStatus && (
+          <p className={`text-[12px] mt-1 ${emailStatus.color}`}>{emailStatus.message}</p>
+        )}
       </div>
 
       <div>
@@ -118,10 +121,10 @@ function SignupPage() {
         </p>
         <div className="text-center mt-3">
           <button
-            disabled={!isComplete || !isEmailAvailable}
+            disabled={!canSubmit}
             onClick={onSubmit}
             className={` w-85 h-12 transition-colors ${
-              isComplete && isEmailAvailable
+              canSubmit
                 ? '!bg-[#FF5218] text-white cursor-pointer'
                 : '!bg-[#E2E2E2] text-white cursor-not-allowed'
             }`}

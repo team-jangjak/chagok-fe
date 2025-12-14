@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router';
 import testimage from '../assets/test-image.svg';
+import PillButton from '@/shared/ui/PillButton';
 
 function TestGudie() {
   const navigate = useNavigate();
@@ -18,9 +19,13 @@ function TestGudie() {
         <p className="text-[11px] text-[#707070] mb-1">
           서비스 제공에 필수적인 설문이므로 건너뛰기는 불가능합니다.
         </p>
-        <button className="!bg-[#FF521B] font-extrabold" onClick={() => navigate('/auth/test')}>
+        <PillButton
+          isSelected
+          handleOptionClick={() => navigate('/auth/test')}
+          className="!bg-[#FF521B] text-white font-extrabold h-12 cursor-pointer"
+        >
           진행하기
-        </button>
+        </PillButton>
       </div>
     </div>
   );

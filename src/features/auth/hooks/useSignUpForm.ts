@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useUserStore } from '@/store/userStore';
+import { isValidEmail } from '@/shared/utils/isValidEmail';
 
 export function useSignupForm() {
   const user = useUserStore();
@@ -25,7 +26,15 @@ export function useSignupForm() {
     return valid;
   }
 
-  const isComplete = name !== '' && gender !== '' && birthDate !== '' && email !== '' && isValidBirthDate(birthDate);
+  const isEmailVaild = isValidEmail(email);
+
+  const isComplete =
+    name !== '' &&
+    gender !== '' &&
+    birthDate !== '' &&
+    email !== '' &&
+    isValidBirthDate(birthDate) &&
+    isEmailVaild;
 
   const handleBirthDate = () => {
     user.setBasicInfo({
@@ -45,6 +54,7 @@ export function useSignupForm() {
     birthDate,
     email,
     isComplete,
+    isEmailVaild,
 
     setName,
     setGender,
