@@ -7,11 +7,13 @@ export function useSocialLogin() {
   const API_BASE = import.meta.env.VITE_API_BASE;
   const KAKAO_CLIENT_ID = import.meta.env.VITE_KAKAO_CLIENT_ID;
 
+  // 카카오 로그인 로직
   const kakaoLogin = () => {
     const kakaoUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${API_BASE}/user/kakao-login&response_type=code`;
     window.open(kakaoUrl, 'kakao-login', 'width=500,height=600,resizable=yes,scrollbars=yes');
   };
 
+  // 구글 로그인 로직
   const googleLogin = async () => {
     const popup = window.open(
       '',

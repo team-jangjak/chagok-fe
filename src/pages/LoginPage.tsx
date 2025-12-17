@@ -27,6 +27,7 @@ function LoginPage() {
           />
         </div>
 
+        {/* 소셜로그인 버튼 구역 */}
         <div className="flex flex-col gap-3">
           <img src={kakaoLoginButton} onClick={kakaoLogin} className="cursor-pointer" />
           <img

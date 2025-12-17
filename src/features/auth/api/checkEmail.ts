@@ -2,6 +2,9 @@ import ky from 'ky';
 
 const API_BASE = import.meta.env.VITE_API_BASE;
 
+{
+  /* 이메일 중복확인 api */
+}
 export const checkEmail = async (email: string) => {
   if (!email) return null;
 

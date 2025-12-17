@@ -28,6 +28,9 @@ export function useSignupForm() {
 
   const isEmailVaild = isValidEmail(email);
 
+  {
+    /* 하나라도 입력 안할경우 false => 다음 단계로 넘어갈 수 없음 */
+  }
   const isComplete =
     name !== '' &&
     gender !== '' &&
@@ -36,6 +39,9 @@ export function useSignupForm() {
     isValidBirthDate(birthDate) &&
     isEmailVaild;
 
+  {
+    /* 항목들을 zustand에 저장 */
+  }
   const handleBirthDate = () => {
     user.setBasicInfo({
       name,

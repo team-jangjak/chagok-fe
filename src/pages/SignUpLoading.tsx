@@ -11,6 +11,8 @@ function SignUpLoading() {
         <p className="text-black font-semibold text-[28px]">서비스를 제공하기 위해서,</p>
         <p className="text-black font-semibold text-[28px]">추가적인 정보가 더 필요해요.</p>
       </div>
+
+      {/* 프로필 입력하는 페이지로 이동하는 버튼 */}
       <div>
         <PrimaryButton
           isEnabled={true}

@@ -26,6 +26,7 @@ export function useSignUpMutation() {
         })
         .json();
     },
+    // 로그인 성공 시, home으로 이동
     onSuccess: (data) => {
       console.log('가입 성공!', data);
       navigate('/main/home');
