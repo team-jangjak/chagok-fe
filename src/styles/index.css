@@ -172,3 +172,22 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* 사이렌 깜빡임 애니메이션 - 인증 필요 카드용 */
+@keyframes siren-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+    border-color: transparent;
+  }
+  50% {
+    box-shadow: 0 0 12px 2px var(--primary);
+    border-color: var(--primary);
+  }
+}
+
+.animate-siren {
+  animation: siren-glow 1.5s ease-in-out infinite;
+  border-width: 2px;
+  border-style: solid;
+}
