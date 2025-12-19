@@ -1,9 +1,9 @@
+import { useSignupStore } from '@/features/auth/contexts/useSignupStore';
 import { useEmailCheck } from '@/features/auth/hooks/useEmailCheck';
 import { useSignupForm } from '@/features/auth/hooks/useSignUpForm';
 import DataInput from '@/shared/ui/DataInput';
 import DatePicker from '@/shared/ui/DatePicker';
 import PillButton from '@/shared/ui/PillButton';
-import { useUserStore } from '@/store/userStore';
 import { useNavigate } from 'react-router';
 
 function SignupPage() {
@@ -19,11 +19,11 @@ function SignupPage() {
     isEmailVaild,
     setEmail,
     setBirthDate,
-    handleBirthDate,
+    handleSubmit,
   } = useSignupForm();
 
   // 프로필 사진 zustand로 저장
-  const profileImage = useUserStore((state) => state.profileImage);
+  const profileImage = useSignupStore((s) => s.profileImage);
 
   const { data: emailData, isError } = useEmailCheck(isEmailVaild ? email : '');
 
@@ -43,9 +43,10 @@ function SignupPage() {
   const isEmailAvailable = isEmailVaild && emailData?.status === 200;
   const canSubmit = isComplete && isEmailAvailable;
 
+  // 이름, 이메일, 성별, 생년월일 store에 저장 로직
   const onSubmit = () => {
     if (!canSubmit) return;
-    handleBirthDate();
+    handleSubmit();
     navigate('/auth/testguide');
   };
 

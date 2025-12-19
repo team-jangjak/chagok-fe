@@ -1,36 +1,32 @@
 import { useState } from 'react';
-import { useUserStore } from '@/store/userStore';
-import { isValidEmail } from '@/shared/utils/isValidEmail';
+import { isValidEmail } from '@shared/utils/isValidEmail';
+import { useSignupStore } from '../contexts/useSignupStore';
 
 export function useSignupForm() {
-  const user = useUserStore();
+  const setBasicInfo = useSignupStore((s) => s.setBasicInfo);
+  const store = useSignupStore((s) => s);
 
-  const [name, setName] = useState(user.name);
-  const [gender, setGender] = useState<'' | '남자' | '여자'>('');
-  const [birthDate, setBirthDate] = useState(user.birthDate ?? '');
-  const [email, setEmail] = useState(user.email);
+  // store 값으로 초기화 (소셜 로그인 시 반영됨)
+  const [name, setName] = useState(store.name || '');
+  const [gender, setGender] = useState<'' | '남자' | '여자'>(store.gender || '');
+  const [birthDate, setBirthDate] = useState(store.birthDate || '');
+  const [email, setEmail] = useState(store.email || '');
 
+  const isEmailVaild = isValidEmail(email);
+
+  // 이메일 유효성 검사
   function isValidBirthDate(dateString: string) {
-    // 형식 체크
     const regex = /^\d{4}-\d{2}-\d{2}$/;
     if (!regex.test(dateString)) return false;
 
     const date = new Date(dateString);
     if (isNaN(date.getTime())) return false;
 
-    // 역검증: "2024-02-30" 같은 경우 걸러짐
     const [y, m, d] = dateString.split('-').map(Number);
-
-    const valid = date.getFullYear() === y && date.getMonth() + 1 === m && date.getDate() === d;
-
-    return valid;
+    return date.getFullYear() === y && date.getMonth() + 1 === m && date.getDate() === d;
   }
 
-  const isEmailVaild = isValidEmail(email);
-
-  {
-    /* 하나라도 입력 안할경우 false => 다음 단계로 넘어갈 수 없음 */
-  }
+  // 필수 항목들을 입력하지 않으면 버튼 비활성화를 위한 로직
   const isComplete =
     name !== '' &&
     gender !== '' &&
@@ -39,19 +35,15 @@ export function useSignupForm() {
     isValidBirthDate(birthDate) &&
     isEmailVaild;
 
-  {
-    /* 항목들을 zustand에 저장 */
-  }
-  const handleBirthDate = () => {
-    user.setBasicInfo({
+  // zustand에 저장 (일단 프로필 사진은 소셜에서 가져옴)
+  const handleSubmit = () => {
+    setBasicInfo({
       name,
-      gender: gender as '남자' | '여자',
+      gender,
       email,
       birthDate,
-      profileImage: user.profileImage,
+      profileImage: store.profileImage, // 기존 소셜 사진 유지
     });
-
-    return birthDate;
   };
 
   return {
@@ -61,12 +53,10 @@ export function useSignupForm() {
     email,
     isComplete,
     isEmailVaild,
-
     setName,
     setGender,
     setBirthDate,
     setEmail,
-
-    handleBirthDate,
+    handleSubmit,
   };
 }

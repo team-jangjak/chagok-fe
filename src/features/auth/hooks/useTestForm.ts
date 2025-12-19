@@ -1,8 +1,9 @@
-import { useState } from 'react';
-import { useUserStore } from '@/store/userStore';
+import { useState, useEffect } from 'react';
+import { useSignupStore } from '../contexts/useSignupStore';
 
 export function useTestForm() {
-  const setTendency = useUserStore((set) => set.setTendency);
+  const tendency = useSignupStore((s) => s.tendency);
+  const setTendency = useSignupStore((s) => s.setTendency);
 
   const [step, setStep] = useState(1);
   const [sum, setSum] = useState({ p1: 0, p2: 0, p3: 0, slider: 0 });
@@ -14,29 +15,34 @@ export function useTestForm() {
   } as const;
 
   const handleAnswer = (key: keyof typeof sum, value: number) => {
-    let score = 0;
-    if (key === 'slider') {
-      score = Math.round(value * 0.25);
-    } else {
-      score = scoreTables[key][value - 1];
-    }
+    const score = key === 'slider' ? Math.round(value * 0.25) : scoreTables[key][value - 1];
+
     setSum((prev) => ({ ...prev, [key]: score }));
-    if (step < 4) setStep(step + 1);
+    setStep((prev) => (prev < 4 ? prev + 1 : prev));
   };
 
   const total = Object.values(sum).reduce((a, b) => a + b, 0);
 
+  // 이미 계산된 tendency가 있다면 다시 덮어쓰지 않음
   const handlenextpage = () => {
-    setTendency(total);
+    if (tendency === 0) {
+      setTendency(total);
+    }
   };
 
   const handleBack = () => {
-    if (step > 1) setStep((prev) => prev - 1);
+    setStep((prev) => (prev > 1 ? prev - 1 : prev));
   };
+
+  // 새로고침 시 이미 완료된 테스트라면 마지막 step으로
+  useEffect(() => {
+    if (tendency > 0) {
+      setStep(4);
+    }
+  }, [tendency]);
 
   return {
     step,
-    setStep,
     sum,
     total,
     handleAnswer,

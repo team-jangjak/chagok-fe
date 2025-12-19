@@ -1,17 +1,20 @@
-import { useUserStore } from '@/store/userStore';
 import { useMutation } from '@tanstack/react-query';
 import ky, { HTTPError } from 'ky';
 import { useNavigate } from 'react-router';
+import { useSignupStore } from '../contexts/useSignupStore';
 
 export function useSignUpMutation() {
   const navigate = useNavigate();
-  const { oauthId, name, gender, email, birthDate, profileImage, tendency } = useUserStore();
+  const { oauthId, name, gender, email, birthDate, profileImage, tendency, reset } = useSignupStore(
+    (s) => s
+  );
+
   const API_BASE = import.meta.env.VITE_API_BASE;
 
   const mutation = useMutation({
     mutationFn: async () => {
       const payload = {
-        oauhId: oauthId,
+        oauthId: oauthId,
         name,
         gender: gender === '남자' ? '남자' : '여성',
         email,
@@ -19,6 +22,9 @@ export function useSignUpMutation() {
         profileImage,
         tendency,
       };
+
+      console.log('[SIGNUP PAYLOAD]', payload);
+
       return ky
         .post(`${API_BASE}/user/sign-up`, {
           json: payload,
@@ -27,9 +33,9 @@ export function useSignUpMutation() {
         .json();
     },
     // 로그인 성공 시, home으로 이동
-    onSuccess: (data) => {
-      console.log('가입 성공!', data);
-      navigate('/main/home');
+    onSuccess: () => {
+      reset();
+      navigate('/main/home', { replace: true });
     },
     onError: async (error: unknown) => {
       if (error instanceof HTTPError) {
