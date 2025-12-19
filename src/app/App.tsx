@@ -7,6 +7,7 @@ import MainLayout from '@app/layouts/MainLayout';
 import HomePage from '@pages/main/HomePage';
 import HistoryPage from '@pages/main/HistoryPage';
 import MyPage from '@pages/main/MyPage';
+import CreateHabit from '@pages/createHabit/CreateHabit';
 
 // 모든 컴포넌트를 포함하는 최상단 컴포넌트
 function App() {
@@ -22,6 +23,8 @@ function App() {
           <Route path="history" element={<HistoryPage />} />
           <Route path="my" element={<MyPage />} />
         </Route>
+        {/* 습관 생성 페이지 */}
+        <Route path="createHabit" element={<CreateHabit />} />
       </Routes>
     </div>
   );
