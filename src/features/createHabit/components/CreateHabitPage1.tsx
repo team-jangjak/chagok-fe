@@ -5,8 +5,29 @@
 */
 import { habitPhotoCards } from '@features/mockdata';
 import HabitPhotoCard from '@shared/ui/HabitPhotoCard';
+import { useState, useEffect } from 'react';
 
-function CreateHabitPage1() {
+interface CreateHabitPage1Props {
+  setNextIsEnabled: (isEnabled: boolean) => void;
+}
+
+function CreateHabitPage1({ setNextIsEnabled }: CreateHabitPage1Props) {
+  const [selectedHabit, setSelectedHabit] = useState<number | null>(null);
+
+  // 습관을 클릭했을 때의 이벤트를 처리하는 함수
+  const handleHabitClick = (id: number) => {
+    setSelectedHabit((prev) => (prev === id ? null : id));
+  };
+
+  // 선택한 습관이 있을 때만 PrimaryButton 활성화
+  useEffect(() => {
+    if (selectedHabit) {
+      setNextIsEnabled(true);
+    } else {
+      setNextIsEnabled(false);
+    }
+  });
+
   return (
     <>
       {/* 헤더 영역 */}
@@ -32,6 +53,8 @@ function CreateHabitPage1() {
             frequency={card.frequency}
             durationInfo={card.durationInfo}
             habitTitle={card.habitTitle}
+            isSelected={selectedHabit === card.id}
+            handleClick={() => handleHabitClick(card.id)}
           />
         ))}
       </div>

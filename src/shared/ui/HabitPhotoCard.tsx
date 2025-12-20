@@ -8,14 +8,20 @@
 	-> durationInfo: 진행 기간 정보 (ex. '1달 도전' 등)
 	-> habitTitle: 습관 제목 (ex. '물구나무서기')
 	-> photoImgSrc: 습관 사진 이미지 소스
+	-> isSelected: 선택 여부 (아마 '습관 생성' 페이지 빼고는 안 쓸듯 함)
+	-> handleClick: 카드 클릭 시 수행할 함수
 */
 import habitPhoto from '@assets/mockdata/handstand.png';
+import checkIcon from '@assets/icons/check-icon.svg';
+import { cn } from '@/lib/utils';
 
 interface HabitPhotoCardProps {
   frequency: string;
   durationInfo: string;
   habitTitle: string;
   photoImgSrc?: string;
+  isSelected?: boolean;
+  handleClick?: () => void;
 }
 
 function HabitPhotoCard({
@@ -23,16 +29,31 @@ function HabitPhotoCard({
   durationInfo,
   habitTitle,
   photoImgSrc = habitPhoto,
+  isSelected,
+  handleClick = () => {},
 }: HabitPhotoCardProps) {
   return (
-    <div className="w-full h-full flex flex-col items-center justify-start gap-3 bg-white/0">
+    <div
+      onClick={handleClick}
+      className="w-full h-full flex flex-col items-center justify-start gap-3 bg-white/0"
+    >
       {/* 사진을 표현하는 상단 영역 */}
-      <div className="w-full h-auto relative">
+      <div className={cn('w-full h-auto relative', isSelected ? 'bg-primary/10' : 'bg-white/0')}>
         <img
           src={photoImgSrc}
           alt="습관 사진"
-          className="w-full h-auto object-contain border border-foreground/50 rounded-md"
+          className="w-full h-auto object-contain rounded-md border border-foreground/50"
         />
+
+        {/* 선택 시 오버레이 + 체크 아이콘 */}
+        {isSelected && (
+          <div className="absolute inset-0 bg-foreground/20 rounded-md flex items-start justify-end p-2">
+            <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center">
+              <img src={checkIcon} alt="선택됨" className="w-4 h-4" />
+            </div>
+          </div>
+        )}
+
         {/* 사진 위에 올라갈 빈도수 표시 영역 */}
         <div className="absolute bottom-2 left-2 w-fit h-fit bg-white border border-foreground/50 rounded-md px-2">
           <span className="text-xs text-foreground">{frequency}</span>
