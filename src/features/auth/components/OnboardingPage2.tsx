@@ -1,7 +1,5 @@
 // 온보딩 페이지 중 2번째 페이지 ('프로필 입력' 페이지)
 import { useState } from 'react';
-import { useOnboarding } from '@features/auth/contexts/useOnboarding';
-import PrimaryButton from '@shared/ui/PrimaryButton';
 import { Avatar, AvatarImage, AvatarFallback } from '@components/ui/avatar';
 import DatePicker from '@shared/ui/DatePicker';
 import DataInput from '@shared/ui/DataInput';
@@ -10,10 +8,6 @@ import RadioButton from '@shared/ui/RadioButton';
 import DropdownMenu from '@/shared/ui/DropdownMenu';
 
 function OnboardingPage2() {
-  const {
-    actions: { handleNext },
-  } = useOnboarding();
-
   const [options, setOptions] = useState({
     '옵션 1': false,
     '옵션 2': false,
@@ -124,9 +118,6 @@ function OnboardingPage2() {
           <DropdownMenu options={['허준호', '허주노', '기처리', '집갈래']} placeholder="이름" />
         </div>
       </div>
-      <PrimaryButton onClick={handleNext} isEnabled={true}>
-        완료
-      </PrimaryButton>
     </>
   );
 }
