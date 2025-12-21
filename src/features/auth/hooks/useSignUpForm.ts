@@ -1,75 +1,62 @@
-import { useEffect, useState } from 'react';
-import { useUserStore } from '@/store/userStore';
+import { useState } from 'react';
+import { isValidEmail } from '@shared/utils/isValidEmail';
+import { useSignupStore } from '../contexts/useSignupStore';
 
 export function useSignupForm() {
-  const user = useUserStore();
+  const setBasicInfo = useSignupStore((s) => s.setBasicInfo);
+  const store = useSignupStore((s) => s);
 
-  const currentYear = new Date().getFullYear();
-  const years = Array.from({ length: 100 }, (_, i) => currentYear - i);
-  const months = Array.from({ length: 12 }, (_, i) => i + 1);
+  // store 값으로 초기화 (소셜 로그인 시 반영됨)
+  const [name, setName] = useState(store.name || '');
+  const [gender, setGender] = useState<'' | '남자' | '여자'>(store.gender || '');
+  const [birthDate, setBirthDate] = useState(store.birthDate || '');
+  const [email, setEmail] = useState(store.email || '');
 
-  const [name, setName] = useState(user.name);
-  const [gender, setGender] = useState<'' | '남자' | '여자'>('');
-  const [year, setYear] = useState('');
-  const [month, setMonth] = useState('');
-  const [day, setDay] = useState('');
-  const [days, setDays] = useState<number[]>([]);
-  const [email, setEmail] = useState(user.email);
+  const isEmailVaild = isValidEmail(email);
 
-  useEffect(() => {
-    if (year && month) {
-      const max = new Date(Number(year), Number(month), 0).getDate();
-      setDays(Array.from({ length: max }, (_, i) => i + 1));
-    }
-  }, [year, month]);
+  // 이메일 유효성 검사
+  function isValidBirthDate(dateString: string) {
+    const regex = /^\d{4}-\d{2}-\d{2}$/;
+    if (!regex.test(dateString)) return false;
 
-  useEffect(() => {
-    if (!year || !month) return;
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return false;
 
-    const max = new Date(Number(year), Number(month), 0).getDate();
-    if (day && Number(day) > max) {
-      setDay('');
-    }
-  }, [day, year, month]);
+    const [y, m, d] = dateString.split('-').map(Number);
+    return date.getFullYear() === y && date.getMonth() + 1 === m && date.getDate() === d;
+  }
 
+  // 필수 항목들을 입력하지 않으면 버튼 비활성화를 위한 로직
   const isComplete =
-    name !== '' && gender !== '' && year !== '' && month !== '' && day !== '' && email !== '';
+    name !== '' &&
+    gender !== '' &&
+    birthDate !== '' &&
+    email !== '' &&
+    isValidBirthDate(birthDate) &&
+    isEmailVaild;
 
-  const handleBirthDate = () => {
-    const birthDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-
-    user.setBasicInfo({
+  // zustand에 저장 (일단 프로필 사진은 소셜에서 가져옴)
+  const handleSubmit = () => {
+    setBasicInfo({
       name,
-      gender: gender as '남자' | '여자',
+      gender,
       email,
       birthDate,
-      profileImage: user.profileImage,
+      profileImage: store.profileImage, // 기존 소셜 사진 유지
     });
-
-    return birthDate;
   };
 
   return {
-    currentYear,
-    years,
-    months,
     name,
     gender,
-
-    year,
-    month,
-    day,
-    days,
+    birthDate,
     email,
     isComplete,
-
+    isEmailVaild,
     setName,
     setGender,
-    setYear,
-    setMonth,
-    setDay,
+    setBirthDate,
     setEmail,
-
-    handleBirthDate,
+    handleSubmit,
   };
 }

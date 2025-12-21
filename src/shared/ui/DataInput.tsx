@@ -10,6 +10,7 @@ import { cn } from '@/lib/utils';
 function DataInput({ className, ...props }: React.ComponentProps<'input'>) {
   return (
     <Input
+      {...props}
       placeholder={props.placeholder ?? '정보를 입력해주세요'}
       className={cn('bg-background pr-10 text-text text-sm placeholder:text-lightgray', className)}
     />

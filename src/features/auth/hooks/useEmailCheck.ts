@@ -1,7 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import { checkEmail } from '../api/check-Email';
+import { checkEmail } from '../api/checkEmail';
 
+{
+  /* 이메일 중복확인 (실시간 반영) */
+}
 export function useEmailCheck(email: string) {
   const [debouncedEmail, setDebouncedEmail] = useState(email);
 

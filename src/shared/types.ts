@@ -1,3 +1,4 @@
+// 회원가입시 들어가야 하는 type
 export interface userinfo {
   oauthId: number;
   name: string;
@@ -8,6 +9,7 @@ export interface userinfo {
   tendency: number;
 }
 
+// zustand에게 사용하기 위한 type 정의
 export interface UserState extends userinfo {
   setOauthId: (id: number) => void;
   setBasicInfo: (info: {

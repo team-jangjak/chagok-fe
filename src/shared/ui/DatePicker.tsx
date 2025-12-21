@@ -1,5 +1,5 @@
 import { CalendarIcon } from 'lucide-react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
 
 import { Button } from '@components/ui/button';
@@ -19,7 +19,7 @@ function DatePicker({ className, ...props }: React.ComponentProps<'input'>) {
   const [open, setOpen] = useState(false);
   const [date, setDate] = useState<Date | undefined>(undefined);
   const [month, setMonth] = useState<Date | undefined>(date);
-  const [value, setValue] = useState<string>('');
+  const [value, setValue] = useState(props.value?.toString() ?? '');
 
   return (
     <div className="flex flex-col gap-3">
@@ -37,6 +37,10 @@ function DatePicker({ className, ...props }: React.ComponentProps<'input'>) {
             // 자동 하이픈 삽입
             const formattedValue = formatDateInput(e.target.value, value);
             setValue(formattedValue);
+
+            props.onChange?.({
+              target: { value: formattedValue },
+            } as React.ChangeEvent<HTMLInputElement>);
 
             // 완전한 날짜인 경우에만 Date 객체 업데이트
             if (formattedValue.length === 10) {
@@ -79,7 +83,13 @@ function DatePicker({ className, ...props }: React.ComponentProps<'input'>) {
               onMonthChange={setMonth}
               onSelect={(date) => {
                 setDate(date);
+                const formatted = formatDate(date);
                 setValue(formatDate(date));
+
+                props.onChange?.({
+                  target: { value: formatted },
+                } as React.ChangeEvent<HTMLInputElement>);
+
                 setOpen(false);
               }}
             />

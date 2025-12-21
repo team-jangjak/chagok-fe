@@ -1,56 +1,52 @@
+import { useSignupStore } from '@/features/auth/contexts/useSignupStore';
 import { useEmailCheck } from '@/features/auth/hooks/useEmailCheck';
 import { useSignupForm } from '@/features/auth/hooks/useSignUpForm';
-import { useUserStore } from '@/store/userStore';
+import DataInput from '@/shared/ui/DataInput';
+import DatePicker from '@/shared/ui/DatePicker';
+import PillButton from '@/shared/ui/PillButton';
 import { useNavigate } from 'react-router';
 
 function SignupPage() {
   const navigate = useNavigate();
   const {
-    year,
-    month,
-    day,
-    days,
     email,
-    years,
-    months,
     isComplete,
+    birthDate,
     name,
     gender,
-    setYear,
     setName,
     setGender,
-    setMonth,
-    setDay,
+    isEmailVaild,
     setEmail,
-    handleBirthDate,
+    setBirthDate,
+    handleSubmit,
   } = useSignupForm();
 
-  const profileImage = useUserStore((state) => state.profileImage);
+  // 프로필 사진 zustand로 저장
+  const profileImage = useSignupStore((s) => s.profileImage);
 
-  const { data: emailData, isError } = useEmailCheck(email);
-  console.log('emailData =>', emailData);
+  const { data: emailData, isError } = useEmailCheck(isEmailVaild ? email : '');
 
-  const emailMessage = (() => {
-    if (!email) return '';
-    if (isError) return '잘못된 이메일 형식이거나 오류가 발생했습니다.';
-    if (!emailData) return '';
-    if (emailData.status == 200) return '사용가능한 이메일입니다.';
-    return '이미 사용중인 이메일입니다.';
+  // 이메일 중복확인 및 유효성에 따른 스타일을 보여주는 로직
+  const emailStatus: { message: string; color: string } | null = (() => {
+    if (!email) return null;
+    if (!isEmailVaild)
+      return { message: '이메일 형식이 올바르지 않습니다.', color: 'text-red-500' };
+    if (isError) return { message: '오류가 발생했습니다.', color: 'text-red-500' };
+    if (!emailData) return null; // debounce / 응답 대기
+    if (emailData.status === 200)
+      return { message: '사용가능한 이메일입니다.', color: 'text-green-500' };
+    return { message: '이미 사용중인 이메일입니다.', color: 'text-red-500' };
   })();
 
-  const emailMessageColor = (() => {
-    if (!email) return 'text-gray-500';
-    if (isError) return 'text-red-500';
-    if (!emailData) return 'text-gray-500';
-    if (emailData.status == 200) return 'text-green-500';
-    return 'text-red-500';
-  })();
+  // 이메일 유효성 & 중복 확인이 되면 버튼 활성화시킬 수 있음
+  const isEmailAvailable = isEmailVaild && emailData?.status === 200;
+  const canSubmit = isComplete && isEmailAvailable;
 
-  const isEmailAvailable = emailData?.status === 200;
-
+  // 이름, 이메일, 성별, 생년월일 store에 저장 로직
   const onSubmit = () => {
-    if (!isComplete) return;
-    handleBirthDate();
+    if (!canSubmit) return;
+    handleSubmit();
     navigate('/auth/testguide');
   };
 
@@ -61,111 +57,84 @@ function SignupPage() {
         <p className="font-medium text-[#707070] text-[20px]">회원님의 정보를 알려주세요.</p>
       </div>
 
+      {/* 프로필 이미지 구역 */}
       <img
         src={profileImage || 'https://cdn.chagok.shop/avatars/default.png'}
         className="rounded-[100%] border-3 border-[#FC9E4F] w-30 h-30 ml-auto mr-auto mt-7"
       />
 
+      {/* 이름 구역 */}
       <p className="text-black font-bold text-[15px] mt-3">이름</p>
-      <input
-        type="text"
+      <DataInput
         value={name}
+        placeholder="이름을 입력해주세요"
         onChange={(event) => setName(event.target.value)}
-        className="border border-[#C2C2C2] rounded-2xl mt-3 w-[100%] h-10 text-[#020122] px-3"
+        className="border border-[#C2C2C2] rounded-2xl text-[#020122] mt-3"
       />
 
+      {/* 성별 구역 */}
       <p className="text-black font-bold text-[15px] mt-3">성별</p>
 
       <div className="flex items-center justify-center gap-3 mt-3">
-        <button
-          type="button"
-          onClick={() => setGender('남자')}
+        <PillButton
+          isSelected={gender == '남자'}
+          handleOptionClick={() => setGender('남자')}
           className={`
-          w-30 px-6 py-2 rounded-lg font-medium transition-colors
-          ${gender === '남자' ? '!bg-[#FC9E4F] text-white' : '!bg-[#E2E2E2] text-white'}
+          w-30 px-6 py-2 rounded-lg font-medium transition-colors  
         `}
         >
           남
-        </button>
+        </PillButton>
 
-        <button
-          type="button"
-          onClick={() => setGender('여자')}
+        <PillButton
+          isSelected={gender == '여자'}
+          handleOptionClick={() => setGender('여자')}
           className={`
           w-30 px-6 py-2 rounded-lg font-medium transition-colors
-          ${gender === '여자' ? '!bg-[#FC9E4F] text-white' : '!bg-[#E2E2E2] text-white'}
         `}
         >
           여
-        </button>
+        </PillButton>
       </div>
 
+      {/* 생년월일 구역 */}
       <div className="mt-3">
         <p className="text-[#020122] font-bold text-[15px]">생년월일</p>
-        <div className="flex gap-4 text-[#020122] justify-center mt-3">
-          <select
-            value={year}
-            onChange={(event) => setYear(event.target.value)}
-            className="border border-[#B0B0B0] w-22 h-10"
-          >
-            <option value="">연도</option>
-            {years.map((year) => (
-              <option key={year} value={year}>
-                {year}
-              </option>
-            ))}
-          </select>
-
-          <select
-            value={month}
-            onChange={(event) => setMonth(event.target.value)}
-            className="border border-[#B0B0B0] w-22 h-10"
-          >
-            <option value="">월</option>
-            {months.map((month) => (
-              <option key={month} value={month}>
-                {month}
-              </option>
-            ))}
-          </select>
-
-          <select
-            value={day}
-            onChange={(event) => setDay(event.target.value)}
-            className="border border-[#B0B0B0] w-22 h-10"
-          >
-            <option value="">일</option>
-            {days.map((day) => (
-              <option key={day} value={day}>
-                {day}
-              </option>
-            ))}
-          </select>
+        <div className="mt-3">
+          <DatePicker
+            value={birthDate}
+            onChange={(e) => setBirthDate(e.target.value)}
+            className="border border-[#C2C2C2] rounded-2xl text-[#020122]"
+          />
         </div>
       </div>
 
+      {/* 이메일 구역 */}
       <div>
         <p className="text-[#020122] mt-3 font-bold text-[15px]">이메일 입력</p>
-        <input
-          type="text"
+        <DataInput
+          type="email"
           placeholder="이메일 입력 (ex. gichul@kakao.com)"
           value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          className="border border-[#C2C2C2] rounded-2xl mt-3 w-[100%] h-10 text-[#020122] px-3"
+          onChange={(e) => setEmail(e.target.value)}
+          className="border border-[#C2C2C2] rounded-2xl text-[#020122] mt-3"
         />
-        {email && <p className={`text-[12px] mt-1 ${emailMessageColor}`}>{emailMessage}</p>}
+        {emailStatus && (
+          <p className={`text-[12px] mt-1 ${emailStatus.color}`}>{emailStatus.message}</p>
+        )}
       </div>
 
+      {/* 성향검사로 넘어가기 위한 버튼 (필수항목 입력 못할 시, 비활성화) */}
       <div>
         <p className="font-medium text-[12px] text-[#707070] text-center mt-7">
           서비스 제공에 필수적인 설문이므로 건너뛰기는 불가능합니다.
         </p>
         <div className="text-center mt-3">
           <button
-            disabled={!isComplete || !isEmailAvailable}
+            disabled={!canSubmit}
             onClick={onSubmit}
             className={` w-85 h-12 transition-colors ${
-              isComplete && isEmailAvailable
+              canSubmit
                 ? '!bg-[#FF5218] text-white cursor-pointer'
                 : '!bg-[#E2E2E2] text-white cursor-not-allowed'
             }`}
