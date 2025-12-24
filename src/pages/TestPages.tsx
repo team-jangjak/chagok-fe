@@ -1,14 +1,14 @@
 import SliderQuestion from '@/features/auth/components/sliderQuestion';
-import StepBar from '@/features/auth/components/stepbar';
 import TestPage from '@/features/auth/components/testpage';
 import { useSignUpMutation } from '@/features/auth/hooks/useSignUpMutation';
 import { useTestForm } from '@/features/auth/hooks/useTestForm';
-import { ChevronLeft } from 'lucide-react';
+import PillButton from '@/shared/ui/PillButton';
+import ProgressActionBar from '@/shared/ui/ProgressActionBar';
 import { useNavigate } from 'react-router';
 
 function TestPages() {
   const navigate = useNavigate();
-  const { step, total, handleAnswer, handlenextpage, handleBack } = useTestForm();
+  const { step, handleAnswer, handlenextpage, handleBack } = useTestForm();
   const signUpMutation = useSignUpMutation();
 
   const totalSteps = 4;
@@ -22,16 +22,18 @@ function TestPages() {
   };
 
   const handleFinish = () => {
-    handlenextpage();
     signUpMutation.mutate();
+    handlenextpage();
   };
   return (
     <div>
-      <div className="flex mt-5 ml-[28px] mr-[28px]">
-        <ChevronLeft className="text-black h-12 cursor-pointer" onClick={handleBackClick} />
-        <div className="flex-1">
-          <StepBar step={step} totalSteps={totalSteps} />
-        </div>
+      <div>
+        <ProgressActionBar
+          handlePrev={handleBackClick}
+          totalSteps={totalSteps}
+          currentStep={step - 1}
+          className="ml-auto mr-auto w-150 mt-5"
+        />
       </div>
 
       {step === 1 && (
@@ -79,11 +81,14 @@ function TestPages() {
       {step === 4 && (
         <div>
           <SliderQuestion question="질문4" onChange={(v) => handleAnswer('slider', v)} />
-          <p className="text-black">(임시 표시)합계 {total}</p>
           <div className="text-center mt-15">
-            <button className="w-85 h-12 !bg-[#FF521B]" onClick={handleFinish}>
+            <PillButton
+              isSelected
+              handleOptionClick={handleFinish}
+              className="w-85 h-12 font-extrabold mr-auto ml-auto cursor-pointer"
+            >
               다음
-            </button>
+            </PillButton>
           </div>
         </div>
       )}

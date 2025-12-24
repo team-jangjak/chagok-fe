@@ -23,8 +23,6 @@ export function useSignUpMutation() {
         tendency,
       };
 
-      console.log('[SIGNUP PAYLOAD]', payload);
-
       return ky
         .post(`${API_BASE}/user/sign-up`, {
           json: payload,

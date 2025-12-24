@@ -1,34 +1,39 @@
 import '@styles/index.css';
-import { useRoutes } from 'react-router';
+import { Routes, Route } from 'react-router';
+
 import LandingPage from '@pages/Landing';
-import OnboardingPage from '@pages/OnboardingPage';
+
 import LoginPage from '@pages/LoginPage';
-import MainLayout from '@app/layouts/MainLayout';
+import SignupPage from '@pages/SignupPage';
+import SignUpLoading from '@pages/SignUpLoading';
+import TestPages from '@pages/TestPages';
+import TestGuide from '@pages/TestGuide';
+
 import HomePage from '@pages/main/HomePage';
 import HistoryPage from '@pages/main/HistoryPage';
 import MyPage from '@pages/main/MyPage';
+import AuthLayout from './layouts/AuthLayout';
+import MainLayout from './layouts/MainLayout';
 
-// 모든 컴포넌트를 포함하는 최상단 컴포넌트
 function App() {
-  const element = useRoutes([
-    ...AuthRoutes,
-    {
-      path: '/',
-      children: [
-        { index: true, element: <LandingPage /> },
-        { path: 'onboarding', element: <OnboardingPage /> },
-      ],
-    },
-  ]);
   return (
     <div className="mx-auto min-w-[320px] max-w-screen-sm min-h-screen flex flex-col bg-white border-l-2 border-r-2 border-gray-100">
       <Routes>
+        {/* public */}
         <Route index element={<LandingPage />} />
-        <Route path="login" element={<LoginPage />} />
-        <Route path="onboarding" element={<OnboardingPage />} />
-        {/* 메인 페이지 레이아웃 (탭 네비게이션을 통해 왔다갔다 하는 레이아웃) */}
+
+        {/* auth */}
+        <Route path="auth" element={<AuthLayout />}>
+          <Route path="login" element={<LoginPage />} />
+          <Route path="signup" element={<SignupPage />} />
+          <Route path="signuploading" element={<SignUpLoading />} />
+          <Route path="test" element={<TestPages />} />
+          <Route path="testguide" element={<TestGuide />} />
+        </Route>
+
+        {/* main */}
         <Route path="main" element={<MainLayout />}>
-          <Route index path="home" element={<HomePage />} />
+          <Route path="home" element={<HomePage />} />
           <Route path="history" element={<HistoryPage />} />
           <Route path="my" element={<MyPage />} />
         </Route>
