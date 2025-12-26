@@ -22,8 +22,9 @@ function PrimaryButton({ className, children, isEnabled, onClick = () => {} }: P
     <div
       className={cn(
         // 해당 버튼의 기본 스타일 적용
-        // 기본적으로 부모 컴포넌트의 하단에 고정되도록 sticky 속성을 추가
-        'sticky bottom-8 w-full py-3 flex items-center justify-center rounded-2xl text-xl transition-all duration-200',
+        // 기본적으로 컴포넌트의 하단에 고정되도록 fixed 속성을 추가 (해당 속성은 부모의 요소와 상관 없음)
+        // z-10 속성을 추가하여 다른 요소들보다 위에 표시되도록 설정
+        'fixed bottom-8 z-10 w-full py-3 flex items-center justify-center rounded-2xl text-xl transition-all duration-200',
 
         // 버튼 상태에 따른 스타일 적용
         isEnabled
