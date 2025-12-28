@@ -14,6 +14,7 @@ import HistoryPage from '@pages/main/HistoryPage';
 import MyPage from '@pages/main/MyPage';
 import AuthLayout from './layouts/AuthLayout';
 import MainLayout from './layouts/MainLayout';
+import CreateHabit from '@pages/createHabit/CreateHabit';
 
 function App() {
   return (
@@ -37,6 +38,8 @@ function App() {
           <Route path="history" element={<HistoryPage />} />
           <Route path="my" element={<MyPage />} />
         </Route>
+        {/* 습관 생성 페이지 */}
+        <Route path="createHabit" element={<CreateHabit />} />
       </Routes>
     </div>
   );
