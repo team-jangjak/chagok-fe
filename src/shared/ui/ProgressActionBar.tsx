@@ -33,6 +33,7 @@ function ProgressActionBar({
       <div className={`w-full ml-6 grid grid-flow-col grid-cols-${totalSteps} gap-3`}>
         {Array.from({ length: totalSteps }).map((_, index) => (
           <div
+            key={index}
             className={cn(
               // 기본 디자인
               'w-full h-2 bg-gray rounded-2xl',

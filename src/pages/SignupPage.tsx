@@ -80,7 +80,7 @@ function SignupPage() {
           isSelected={gender == '남자'}
           handleOptionClick={() => setGender('남자')}
           className={`
-          w-30 px-6 py-2 rounded-lg font-medium transition-colors  
+          w-30 px-6 py-2 rounded-lg font-medium transition-colors cursor-pointer
         `}
         >
           남
@@ -90,7 +90,7 @@ function SignupPage() {
           isSelected={gender == '여자'}
           handleOptionClick={() => setGender('여자')}
           className={`
-          w-30 px-6 py-2 rounded-lg font-medium transition-colors
+          w-30 px-6 py-2 rounded-lg font-medium transition-colors cursor-pointer
         `}
         >
           여
@@ -130,17 +130,13 @@ function SignupPage() {
           서비스 제공에 필수적인 설문이므로 건너뛰기는 불가능합니다.
         </p>
         <div className="text-center mt-3">
-          <button
-            disabled={!canSubmit}
-            onClick={onSubmit}
-            className={` w-85 h-12 transition-colors ${
-              canSubmit
-                ? '!bg-[#FF5218] text-white cursor-pointer'
-                : '!bg-[#E2E2E2] text-white cursor-not-allowed'
-            }`}
+          <PillButton
+            isSelected={canSubmit}
+            handleOptionClick={onSubmit}
+            className={`w-85 h-12 font-extrabold mr-auto ml-auto cursor-pointer ${!canSubmit ? 'pointer-events-none' : ''}`}
           >
-            <p className="font-extrabold">완료</p>
-          </button>
+            완료
+          </PillButton>
         </div>
       </div>
     </div>
