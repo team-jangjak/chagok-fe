@@ -132,9 +132,7 @@ export const actionInfoCards = [
   },
 ];
 
-{
-  /* 사랑방 목데이터 */
-}
+// 사랑방 목데이터
 export const thirdPartyInfo = [
   {
     id: 1,

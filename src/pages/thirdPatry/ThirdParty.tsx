@@ -55,12 +55,12 @@ function ThirdPage() {
             key={info.id}
             onClick={() => navigate(`${info.id}`)}
           >
-            <img src={testimage} className="object-cover rounded-2xl" />
+            <img src={testimage} className="object-cover rounded-2xl" alt="테스트 이미지" />
             <div className="flex justify-between items-center mt-2 font-medium">
               <p>{info.durationInfo}</p>
               <p>{info.name}</p>
             </div>
-            <div className="absolute bottom-10 left-2 bg-[#D9D9D9] px-2 text-[13px] rounded-2xl">
+            <div className="absolute bottom-2.5 left-2 bg-[#D9D9D9] px-2 text-[13px] rounded-2xl">
               {info.frequency}
             </div>
           </div>
