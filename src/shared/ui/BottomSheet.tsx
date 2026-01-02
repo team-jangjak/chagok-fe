@@ -28,7 +28,9 @@ function BottomSheet({ open, onClose, initialView, className }: BottomSheetProps
       }}
       snapPoints={[0.9, 1]} // {[처음 실행시 높이, 끌어올릴 수 있는 최대 높이]}
     >
-      <DrawerContent className={cn('rounded-t-2xl flex flex-col max-h-dvh', className)}>
+      <DrawerContent
+        className={cn('rounded-t-2xl flex flex-col max-h-dvh mx-auto w-full max-w-160', className)}
+      >
         {/* 헤더 */}
         <div className="flex shrink-0 items-center justify-end py-5">
           <Button onClick={onClose} variant="ghost" className="cursor-pointer">
