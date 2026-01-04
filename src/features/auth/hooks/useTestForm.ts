@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSignupStore } from '../contexts/useSignupStore';
 
 export function useTestForm() {
@@ -35,11 +35,11 @@ export function useTestForm() {
   };
 
   // 새로고침 시 이미 완료된 테스트라면 마지막 step으로
-  useEffect(() => {
-    if (tendency > 0) {
-      setStep(4);
-    }
-  }, [tendency]);
+  // useEffect(() => {
+  //   if (tendency > 0) {
+  //     setStep(4);
+  //   }
+  // }, [tendency]);
 
   return {
     step,

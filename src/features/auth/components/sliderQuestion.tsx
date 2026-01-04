@@ -1,8 +1,10 @@
 import type { SliderQuestionProps } from '@/shared/types';
 import { useSliderQuestion } from '../hooks/useSliderQuestion';
+import SliderSelection from './SliderSelection';
+import RollingNumber from '@/shared/ui/RollingNumber';
 
 function SliderQuestion({ question, onChange }: SliderQuestionProps) {
-  const { value, handleSlider } = useSliderQuestion(onChange);
+  const { value, handleCommit } = useSliderQuestion(onChange);
 
   return (
     <div className="mt-3 ml-[28px] mr-[28px]">
@@ -12,20 +14,14 @@ function SliderQuestion({ question, onChange }: SliderQuestionProps) {
         <p className="text-[#707070] font-medium text-[20px]">얼마나 지키는 사람인가요?</p>
       </div>
 
-      <input
-        type="range"
-        min={0}
-        step={10}
-        max={100}
-        value={value}
-        onChange={handleSlider}
-        className="w-[100%] !bg-[#FF521B] appearance-none rounded-full mt-35"
-      />
+      <div className="mt-10">
+        <SliderSelection className="bg-[#FF521B] mt-25 mb-15" onValueCommit={handleCommit} />
+      </div>
 
-      <div className="flex flex-col justify-center items-center mt-15 gap-4">
-        <p className="font-semibold text-[#020122]">난 그래도...</p>
-        <p className="text-[#020122] text-4xl font-extrabold">{value}%</p>
-        <p className="font-semibold text-[#020122]">정도는 지키는 것 같다!</p>
+      <div className="flex flex-col justify-center items-center mt-10 gap-4">
+        <p className="font-semibold text-[#020122] text-xl">난 그래도...</p>
+        <RollingNumber value={value} suffix="%" />
+        <p className="font-semibold text-[#020122] text-xl">정도는 지키는 것 같다!</p>
       </div>
     </div>
   );

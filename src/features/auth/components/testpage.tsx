@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import type { TestPageProps } from '@/shared/types';
+import SelectButton from './SelectButton';
+import PillButton from '@/shared/ui/PillButton';
 
 function TestPage({ question, content, choices, onAnswer }: TestPageProps) {
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
@@ -21,37 +23,24 @@ function TestPage({ question, content, choices, onAnswer }: TestPageProps) {
           const opt = index + 1;
 
           return (
-            <button
+            <SelectButton
               key={opt}
+              isSelected={selectedOption === opt}
               onClick={() => setSelectedOption(opt)}
-              className={`
-                h-20 rounded-xl border transition-all
-                ${
-                  selectedOption === opt
-                    ? '!bg-[#FC9E4F] text-white scale-[1.02]'
-                    : '!bg-[#FFFFFF] text-[#C2C2C2] !border-[#C2C2C2]'
-                }
-              `}
+              className="h-20 text-lg cursor-pointer"
             >
               {label}
-            </button>
+            </SelectButton>
           );
         })}
 
-        <button
-          disabled={selectedOption === null}
-          onClick={handleNext}
-          className={`
-            h-12 rounded-lg mt-4 w-full transition-colors font-bold
-            ${
-              selectedOption !== null
-                ? '!bg-[#FF521B] text-white cursor-pointer'
-                : '!bg-[#E2E2E2] text-black cursor-not-allowed'
-            }
-          `}
+        <PillButton
+          isSelected={selectedOption !== null}
+          handleOptionClick={handleNext}
+          className={`h-12 mt-4 w-full font-bold cursor-pointer ${selectedOption === null ? 'pointer-events-none' : ''}`}
         >
           다음
-        </button>
+        </PillButton>
       </div>
     </div>
   );
