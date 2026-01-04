@@ -132,6 +132,13 @@ export const actionInfoCards = [
   },
 ];
 
+// 마이 페이지용 목데이터
+export const myPageInfo = {
+  id: 1,
+  name: '테스트 유저 이름',
+  point: '3200',
+  streak: 5,
+};
 // 사랑방 목데이터
 export const thirdPartyInfo = [
   {

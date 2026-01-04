@@ -18,7 +18,7 @@ function LoginPage() {
         </div>
 
         {/* 로그인 애니메이션 */}
-        <div className="w-[200px] h-[200px] mt-8 mb-4">
+        <div className="w-50 h-50 mt-8 mb-4">
           <DotLottieReact
             src="https://lottie.host/d20599f6-9590-47f2-af0c-c1f0d2e1c59c/giTwOCGajP.lottie"
             loop
