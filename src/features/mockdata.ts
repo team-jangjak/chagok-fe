@@ -131,3 +131,77 @@ export const actionInfoCards = [
     isShouldIdentify: false,
   },
 ];
+
+// 사랑방 목데이터
+export const thirdPartyInfo = [
+  {
+    id: 1,
+    name: '물구나무 30분',
+    durationInfo: '[1달 도전]',
+    frequency: '주 1회',
+    category: '운동',
+  },
+  {
+    id: 2,
+    name: '러닝 5Km',
+    durationInfo: '[3달 도전]',
+    frequency: '주 3회',
+    category: '식습관',
+  },
+  {
+    id: 3,
+    name: '독서',
+    durationInfo: '[3달 도전]',
+    frequency: '주 2회',
+    category: '생활',
+  },
+  {
+    id: 4,
+    name: '물구나무 30분',
+    durationInfo: '[1달 도전]',
+    frequency: '주 1회',
+    category: '정서',
+  },
+  {
+    id: 5,
+    name: '물구나무 30분',
+    durationInfo: '[1달 도전]',
+    frequency: '주 1회',
+    category: '취미',
+  },
+  {
+    id: 6,
+    name: '물구나무 30분',
+    durationInfo: '[1달 도전]',
+    frequency: '주 1회',
+    category: '취미',
+  },
+  {
+    id: 7,
+    name: '물구나무 30분',
+    durationInfo: '[1달 도전]',
+    frequency: '주 1회',
+    category: '생활',
+  },
+  {
+    id: 8,
+    name: '물구나무 30분',
+    durationInfo: '[1달 도전]',
+    frequency: '주 1회',
+    category: '운동',
+  },
+  {
+    id: 9,
+    name: '물구나무 30분',
+    durationInfo: '[1달 도전]',
+    frequency: '주 1회',
+    category: '운동',
+  },
+  {
+    id: 10,
+    name: '물구나무 30분',
+    durationInfo: '[1달 도전]',
+    frequency: '주 1회',
+    category: '식습관',
+  },
+];

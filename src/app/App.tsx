@@ -15,7 +15,8 @@ import MyPage from '@pages/main/MyPage';
 import AuthLayout from './layouts/AuthLayout';
 import MainLayout from './layouts/MainLayout';
 import CreateHabit from '@pages/createHabit/CreateHabit';
-import { Routes, Route } from 'react-router';
+import ThirdPage from '@/pages/thirdPatry/ThirdParty';
+import ThirdDetailPage from '@/pages/thirdPatry/ThirdDetailPage';
 
 function App() {
   return (
@@ -38,6 +39,8 @@ function App() {
           <Route path="home" element={<HomePage />} />
           <Route path="history" element={<HistoryPage />} />
           <Route path="my" element={<MyPage />} />
+          <Route path="thirdparty" element={<ThirdPage />} />
+          <Route path="thirdparty/:id" element={<ThirdDetailPage />} />
         </Route>
         {/* 습관 생성 페이지 */}
         <Route path="createHabit" element={<CreateHabit />} />
