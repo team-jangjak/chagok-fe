@@ -15,6 +15,7 @@ import MyPage from '@pages/main/MyPage';
 import AuthLayout from './layouts/AuthLayout';
 import MainLayout from './layouts/MainLayout';
 import CreateHabit from '@pages/createHabit/CreateHabit';
+import { Routes, Route } from 'react-router';
 
 function App() {
   return (
