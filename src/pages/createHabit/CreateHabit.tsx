@@ -6,6 +6,7 @@ import { useState } from 'react';
 import ProgressActionBar from '@shared/ui/ProgressActionBar';
 import CreateHabitPage1 from '@features/createHabit/components/CreateHabitPage1';
 import CreateHabitPage2 from '@features/createHabit/components/CreateHabitPage2';
+import CreateHabitPage3 from '@features/createHabit/components/CreateHabitPage3';
 import PrimaryButton from '@shared/ui/PrimaryButton';
 
 function CreateHabit() {
@@ -24,6 +25,7 @@ function CreateHabit() {
       {/* 습관 생성 페이지 1번째 페이지 */}
       {currentStep === 1 && <CreateHabitPage1 setNextIsEnabled={setNextIsEnabled} />}
       {currentStep === 2 && <CreateHabitPage2 setNextIsEnabled={setNextIsEnabled} />}
+      {currentStep === 3 && <CreateHabitPage3 />}
       <PrimaryButton
         onClick={
           currentStep === 4
